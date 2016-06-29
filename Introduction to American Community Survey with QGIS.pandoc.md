@@ -50,7 +50,7 @@ Although we haven't done much yet, it is a good idea to save your work early and
 
 In order to map the demographic data, we need to join it to the spatial layer. Double-click the `ACS_2014_5YR_STATE` layer in the Layers Panel. In the left column, choose the Joins tab. At the bottom of the window hit the Green plus sign to open the Add vector join dialog. For the Join layer, choose `X02_RACE`. Set the Join field (which is in the **attribute** table) to `GEOID`. Set the Target field (which is in the **spatial** table) to `GEOID_Data`. **Do NOT set the Target field to `GEOID`**. In spite of the same name, these fields do not have identical data which can be used to do the join!
 
-When the `X02_RACE` table gets joined, the fields will appear in the `ACS_2014_5YR_STATE`. Because field names may be duplicated (`GEOID` is a case in point), the joined fields will appear with prefix. The default is the name of the join layer, which in this case is the rather unwieldy `ACS_2014_5YR_STATE X02_RACE any_`. Click the checkbox for a Custom field name prefix, and shorten the prefix to `race_`.
+When the `X02_RACE` table gets joined, the fields will appear in the `ACS_2014_5YR_STATE`. Because field names may be duplicated (`GEOID` is a case in point), the joined fields will appear with a prefix. The default is the name of the join layer, which in this case is the rather unwieldy `ACS_2014_5YR_STATE X02_RACE any_`. Click the checkbox for a Custom field name prefix, and shorten the prefix to `race_`.
 
 After setting these parameters, your dialog should look like this:
 
