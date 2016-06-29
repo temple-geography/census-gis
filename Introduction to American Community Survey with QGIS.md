@@ -23,11 +23,11 @@ Adding and Joining Data in QGIS
 
 Open QGIS Desktop (*not* QGIS Browser) by double-clicking the icon on your desktop, or find it in the Start Menu in the OSGeo4W folder.
 
-![The main QGIS window](images/QgisDesktop.png)
+![The main QGIS window](images/QgisDesktop.png) 
 
 The central pane is where you will see the geographic data that you add. The left and right panes are dockable panels that can be torn off (grab the title bar of the panel) if you prefer floating panels in your workspace. We won’t be using the Processing Toolbox today, so if it is open (by default in a right-hand panel) you can close it in order to increase the area avaialable for the map canvas. The left panel is the Layers pane. This will be an index of layers you have added.
 
-Now let’s add some data. QGIS allows you to pretty easily add file-based data (such as shapefiles) as well as data from web map services (WMS, WCS, WFS) and spatial databases (such as PostGIS). In order to add ESRI File Geodatabase layers, click the ![](http://docs.qgis.org/testing/en/_images/mActionAddOgrLayer.png) Add Vector Layer button. In the top pane, set the Source type to Directory. In the bottom pane, set the Type dropdown to either “ESRI FileGDB” or “OpenFileGDB”. The OpenFileGDB driver is a read-only, open source driver. Since we will not be making any changes to the data, we can choose this driver. If you intended to alter any of the data, you would have to use the native ESRI FileGDB driver. The dialog should look like this:
+Now let’s add some data. QGIS allows you to pretty easily add file-based data (such as shapefiles) as well as data from web map services (WMS, WCS, WFS) and spatial databases (such as PostGIS). In order to add ESRI File Geodatabase layers, click the ![](http://docs.qgis.org/testing/en/_images/mActionAddOgrLayer.png) Add Vector Layer button. In the top pane, set the Source type to Directory. In the bottom pane, set the Type dropdown to either “OpenFileGDB”.[1] The dialog should look like this:
 
 ![](images/QgisOpenFileGdb.png) 
 
@@ -38,15 +38,25 @@ You should then see a list of layers to be added. You can control-click to selec
 -   `X02_RACE`
 -   `X19_INCOME`
 
-Searching `STATE_METADATA_2014` for data you are interested in may be somewhat difficult. You may use the text or Excel files available on the [ACS Summary File Documentation](http://www.census.gov/programs-surveys/acs/technical-documentation/summary-file-documentation.html) web page in the section called “Sequence Number/Table Number Lookup File”. If you use the files note the following.
+Searching `STATE_METADATA_2014` for data you are interested in may be somewhat difficult. The metadata is also available in text or Excel files available on the [ACS Summary File Documentation](http://www.census.gov/programs-surveys/acs/technical-documentation/summary-file-documentation.html) web page in the section called “Sequence Number/Table Number Lookup File”. If you use the text or Excel files note the following.
 
 -   The TableID corresponds to the beginning of the column name, up to the lower case letter `e` or `m`.
--   The lower case `e` indicates an estimate, while `m` indicates a margin of error.
+-   The lower case `e` indicates an **estimate**, while `m` indicates a **margin of error**.
 -   The number after `e` or `m` corresponds to the Line Number in the Excel or text lookup file.
 
 Although we haven’t done much yet, it is a good idea to save your work early and often. Hit `Ctrl+S` to save your QGIS document. Make sure to save it to your flash drive or other working folder. As you continue to work, periodically hit `Ctrl+S`, especially after making any signficant changes to your map.
 
 In order to map the demographic data, we need to join it to the spatial layer. Double-click the `ACS_2014_5YR_STATE` layer in the Layers Panel. In the left column, choose the Joins tab. At the bottom of the window hit the Green plus sign to open the Add vector join dialog. For the Join layer, choose `X02_RACE`. Set the Join field (which is in the **attribute** table) to `GEOID`. Set the Target field (which is in the **spatial** table) to `GEOID_Data`. **Do NOT set the Target field to `GEOID`**. In spite of the same name, these fields do not have identical data which can be used to do the join!
+
+When the `X02_RACE` table gets joined, the fields will appear in the `ACS_2014_5YR_STATE`. Because field names may be duplicated (`GEOID` is a case in point), the joined fields will appear with prefix. The default is the name of the join layer, which in this case is the rather unwieldy `ACS_2014_5YR_STATE X02_RACE any_`. Click the checkbox for a Custom field name prefix, and shorten the prefix to `race_`.
+
+After setting these parameters, your dialog should look like this:
+
+![](images/QgisVectorJoinGeoid.png) 
+
+Hit OK. Then hit OK again to close the Layer Properties dialog.
+
+The `ACS_2014_5YR_STATE` should still be selected in the Layers Panel. (If it is not, single-click to select it.) Hit the Open Attribute Table toolbar button ![](http://docs.qgis.org/testing/en/_images/mActionOpenTable.png), or right-click the layer and select Open Attribute Table from the popup menu. Scroll to the right of the table grid to see the new columns that have been joined.
 
 Cartographic Display of Demographic Data
 ========================================
@@ -63,18 +73,35 @@ Open the Layer Properties dialog and select the Style tab in the left pane. At t
 3.  Select a **sequential** color ramp from the Color ramp dropdown. A sequential color ramp is one that progresses from light to dark. A **diverging** color ramp is light in the middle but progresses to two different hues (e.g. blue and bronw) at the extremes.
 4.  In the Mode dropdown, choose “Natural Breaks (Jenks)”.
 5.  Set the number of classes to either 5 or 7.
-6.  If the list of classes with varying color symbols has not already appeared in the cetral white pane, click the Classify button just above it.
+6.  If the list of classes with varying color symbols has not already appeared in the central white pane, click the Classify button just above it.
 7.  Hit OK to see your map.
 
-Create a Proportional Symbol Map
---------------------------------
+Create a Proportional Symbol Pie Chart Map
+------------------------------------------
 
-Raw count data can be represented by a symbol, such as a circle, of varying size.
+Magnitude data, like counts, can be represented using a so-called **proportional symbol map**, where a symbol such as a circle is sized relative to the underlying data values. (Sometimes, usually by non-geographers, this is referred to as a bubble map or bubble chart.) For data that adds up to a total, we may display the result using a pie chart. The pie chart size is controlled by total population, and the pie chart itself shows the components of the total. For example, for housing, you could display a pie chart with wedges showing renter-occupied, owner-occupied, and vacant housing. We will display a pie chart showing wedges based on the count of population of a given race. (For the present exercise, we will ignore the categories “Some other race” and “Two or more races”.)
 
-Create a Proportional Pie Chart Map
------------------------------------
+To add the pie charts, open the Layer Properties dialog and click the Diagrams tab in the left-hand pane. Then check the box “Show diagrams for this layer” at the top of the dialog. The Diagram type should default to Pie chart, but if it doesn’t select it from the dropdown.
 
-For data that adds up to a total, we may display the result using a pie chart. This may be a proportional symbol map where the pie chart size is controlled by total population, and the pie chart itself shows the components of the total. For example, for housing, you could display a pie chart showing renter-occupied, owner-occupied, and vacant housing.
+There are five settings groupings: Attributes, Appearance, Size, Placement, and Options. We will make changes in three of them:
+
+-   Attributes: Select the following fields in the Available attributes pane, and click the green plus sign so that they appear in the Assigned attributes pane:
+    -   `race_B02001e2` - White alone
+    -   `race_B02001e3` - Black or African American alone
+    -   `race_B02001e4` - American Indian and Alaska Native alone
+    -   `race_B02001e5` - Asian alone
+    -   `race_B02001e6` - Native Hawaiian and Other Pacific Islander alone
+-   Size: Click the Scaled size radio button
+    -   Attribute: Set to `race_B02001e1`, which is the total population of all races
+    -   Maximum value: Click the Find button to determine the largest value in the selected field, `race_B02001e1`. **NOTE: As of QGIS 2.14.3, this appears not to work with joined data. Therefore, you may have to exit this dialog and inspect the attribute table yourself to find the largest value. You can do this by clicking on the top of the `race_B02001e1` column to sort the data in that column.**
+    -   Size: This number represents the Area (default) or Diameter of pie chart. For magnitude data, you always want this to be the Area. The default is 50. Depending on your map, this symbols may be too large or too smale. For this data at this scale, I would suggest experimenting with values between about 15 and 30. (See image below.)
+-   Placement: Set the Placement dropdown to Over Centroid
+
+![](images/QgisPieChartSize.png) 
+
+Click OK to close the dialog.
+
+Note that the Pie Chart is also what you would use to set a proportional symbol for a single magnitude value, like total population. Just choose a single value in the Attributes panel and choose the same attribute to control the size in the Size panel.
 
 Creating a Print Layout
 =======================
@@ -94,7 +121,7 @@ At this point you may want to adjust the viewable area of both your main map and
 Adding Supporting Elements to the Page
 --------------------------------------
 
-Now add a title using the `Add new label` tool ![](images/QgisAddNewLabel.png).[1] Select the tool and click in the map in the top left of the page. The label will immediately appear with some dummy text. Position it in the upper left corner, and drag the lower right corner to fill an area roughly 3 picas tall and stretching across the top of the page. In the Item Properties tab, change the label text to an appropriate title for your map. Click the Font button, and set the font to Arial Black[2] 24. Set the Alignment to Horizontal=Center and Vertical=Bottom. If the title is long enough to wrap to a second line, make the font size smaller.
+Now add a title using the `Add new label` tool ![](images/QgisAddNewLabel.png).[2] Select the tool and click in the map in the top left of the page. The label will immediately appear with some dummy text. Position it in the upper left corner, and drag the lower right corner to fill an area roughly 3 picas tall and stretching across the top of the page. In the Item Properties tab, change the label text to an appropriate title for your map. Click the Font button, and set the font to Arial Black[3] 24. Set the Alignment to Horizontal=Center and Vertical=Bottom. If the title is long enough to wrap to a second line, make the font size smaller.
 
 Click the `Add new legend` tool ![](images/QgisAddNewLegend.png) and drop a legend in the empty area to the right. The legend will appear with entries for *all* layers in your map. If you’re only interested in a particular layer, in the Item Properties tab, expand the Legend items section, select and delete (using the large red minus icon) any layers you don’t want to appear in the legend. Below the legend, add sources and any additional information you want, including your name. Depending upon the steps taken for a particular map, you may credit yourself for “Cartography” or for “Analysis and Cartography”. For this map, just “Cartography” is appropriate. The data are from the American Community Survey 2014 5-year Average. Date your work. Add any other explanatory text or credits that you want. You may add a scale bar and North arrow, but for thematic maps (as opposed to reference maps) these elements are not strictly necessary, and can just clutter your layout.
 
@@ -110,10 +137,12 @@ Add the MSA (Metropolitan/Micropolitan Statistical Area) data that you also down
 
 1.  Use a sequential color ramp to display Median Household Income by state. You will have to look up the correct column name in the metadata table in QGIS or in the lookup table that you downloaded.
 2.  Join the race data to the MSA layer.
-3.  Create a single-symbol symbology for the MSA, but make the symbol invisible (no fill, no border).
-4.  Add a diagram to the MSA that is a pie chart with major racial categories as the wedges, and symbol size controlled by total population. You should be able to find these column names in the metadata, but the base name should be `B02001e...`, which is the same as what you used earlier in the exercise.
+3.  In the Style tab, create a single-symbol symbology for the MSA, but make the symbol invisible (no fill, no border).
+4.  Add a diagram to the MSA that is a pie chart with major racial categories as the wedges, and symbol size controlled by total population. These should be the same column (`B02001e...`) that you used earlier in the exercise.
 5.  Create a layout and export it to PDF.
 
-[1] Note, QGIS does not distinguish between adding a label and adding a title, the way ArcMap does.
+[1] The OpenFileGDB driver is a read-only, open source driver. Computers with ArcGIS installed may have an option for the “ESRI FileGDB” driver. Since we will not be making any changes to the data, we can use the OpenFileGDB driver. If you intended to alter any of the data, you would have to use the native ESRI FileGDB driver.
 
-[2] It is better to use a font constructed as bold (“Black”, “Heavy”) or italic (“Oblique”) than to take a base typeface like Arial and apply bold or italic to it.
+[2] Note, QGIS does not distinguish between adding a label and adding a title, the way ArcMap does.
+
+[3] It is better to use a font constructed as bold (“Black”, “Heavy”) or italic (“Oblique”) than to take a base typeface like Arial and apply bold or italic to it.
