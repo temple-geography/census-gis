@@ -123,7 +123,7 @@ Now open the attribute table for `acs2014_philly_housing`, and open the Field Ca
 
 -   Output field name = `housing_adj_1970`
 -   Output field type = “Decimal number (double)\`
--   Expression: \`“housing\_est\_1970” \* “A41AA1970” / “county\_est\_1970”
+-   Expression: `"housing_est_1970" * "A41AA1970" / "county_est_1970"`
 
 Hit OK. Save edits and Toggle editing off. Then repeat for 1980, 1990, 2000, and 2010. Make sure to Save edits after each field calculation.
 
