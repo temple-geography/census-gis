@@ -19,8 +19,11 @@ Calculating the Index of Dissimilarity
 
 As we discussed in class, the formula for \(D\), the Index of Dissimilarity, is:
 
-![](images/EqnIndexOfDissimilarity.png)\ 
+\[D = \frac{1}{2} \sum_i \left|\frac{a_i}{A} - \frac{b_i}{B} \right|\]
 
+<!--
+![](images/EqnIndexOfDissimilarity.png)\ 
+-->
 First let’s determine what fields we will use. You may choose to calculate Black-White dissimilarity, or Hispanic-White dissimilarity. Look at the ACS metadata[1] for table B03002 “Hispanic or Latino Origin By Race”. American researchers will typically group Hispanics of all races into one category, and then the White or Black category will only count as White or Black those people who are not Hispanic. For this example, I will use `B03002e3` for Nonhispanic White and `B03002e4` for Nonhispanic Black.
 
 QGIS gives us a way to create summary statistics using a tool called “Statistics by categories”. Looking at the formula above, we are interested in the *sum* of a calculated value. Unfortunately QGIS does not let us create summary statistics on an arbitrary expression, so first we need to create a field that represents the difference in subpopulation shares that we see to the right of the summation symbol.
@@ -64,7 +67,7 @@ Now that you have calculated the Index of Dissimilarity by state, you can remove
 After joining the `sum` column, QGIS may not recognize it as a quantitative value. In order to convert it to quantitative and to permanently save the value in your database, do the following:
 
 1.  Join the `Statistics by category` table to the `state_hispanic` layer. The matching fields are `category` and `STATEFP`.
-2.  Open the Field Calculator ![](images/QgisFieldCalculator.png).
+2.  Open the Field Calculator ![](http://docs.qgis.org/testing/en/_images/mActionCalculateField.png).
 3.  Set the Output field name to `Dissimilarity_Black_White` or another appropriate name.
 4.  Set the Output field type to “Decimal number (double).
 5.  In the list of functions (middle pane), expand the Conversion branch. Select the `to_real` function and read the documentation in the right-hand pane. Double-click (or just type) to add it to the Expressions pane on the left.

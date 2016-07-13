@@ -69,7 +69,7 @@ Now that you have calculated the Index of Dissimilarity by state, you can remove
 After joining the `sum` column, QGIS may not recognize it as a quantitative value. In order to convert it to quantitative and to permanently save the value in your database, do the following:
 
 1. Join the `Statistics by category` table to the `state_hispanic` layer. The matching fields are `category` and `STATEFP`.
-2. Open the Field Calculator ![](images/QgisFieldCalculator.png).
+2. Open the Field Calculator ![](http://docs.qgis.org/testing/en/_images/mActionCalculateField.png).
 3. Set the Output field name to `Dissimilarity_Black_White` or another appropriate name.
 4. Set the Output field type to "Decimal number (double).
 5. In the list of functions (middle pane), expand the Conversion branch. Select the `to_real` function and read the documentation in the right-hand pane. Double-click (or just type) to add it to the Expressions pane on the left.
