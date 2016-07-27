@@ -107,7 +107,11 @@ The QGIS FlowMapper plugin requires the files in the following formats:
 * The flows matrix, which you just downloaded, though we will have to clean it up.
 * An optional names file, with the names of the geographies (county names in this case).
 
-The coordinates file can be downloaded from <Coordinates.txt>.
+The coordinates file can be downloaded from <https://github.com/temple-geography/census-gis/blob/master/Coordinates.txt>.
+
+<!--NOTE: Check coordinates file to make sure order matches that of Flows.txt and Names.txt-->
+
+<!--NOTE: Update instructions to have students create coordinates file themselves-->
 
 ### Creating the Name File
 
@@ -117,9 +121,15 @@ Open Notepad++. Paste the column of names. You should have one name per line.
 
 Save it with the name `Names.txt`.
 
+>TIP: Make sure your file contains no blank lines at the end.
+
 ### Creating the Flows File
 
-Switch back to Excel. Delete *all* Titles, headers, columns names, row names, and footnotes. The only thing left should be a 11x11 matrix of numbers. Save the file. Make sure to save it in a tab-delimited format. Name the file `Matrix.txt`.
+Switch back to Excel. Delete *all* Titles, headers, columns names, row names, and footnotes. The only thing left should be a 11x11 matrix of numbers. Fill in any blanks with 0. Now use Save As to save the file with a new name and format. Choose the "Text (Tab delimited)" format. Name the file `Matrix.txt`.
+
+>TIP: Make sure your file contains no blank lines at the end.
+
+Excel will give you an extremely annoying dialog asking whether you are sure that you want to save the file in this format. Click Yes. Then close the file. Even though you have not made any additional changes since saving the file, when you close it, Excel will prompt you to save changes. Excel does this *even though you have already saved it* since you did not save it to Excel's native format. This is a little counterintuitive, but click Don't Save and exit Excel.
 
 # Creating Flow Lines
 
