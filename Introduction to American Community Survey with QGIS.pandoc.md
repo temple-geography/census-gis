@@ -29,14 +29,14 @@ Open QGIS Desktop (*not* QGIS Browser) by double-clicking the icon on your deskt
 
 The central pane is where you will see the geographic data that you add. The left and right panes are dockable panels that can be torn off (grab the title bar of the panel) if you prefer floating panels in your workspace. We won't be using the Processing Toolbox today, so if it is open (by default in a right-hand panel) you can close it in order to increase the area avaialable for the map canvas. The left panel is the Layers pane. This will be an index of layers you have added.
 
-Now let's add some data. QGIS allows you to pretty easily add file-based data (such as shapefiles) as well as data from web map services (WMS, WCS, WFS) and spatial databases (such as PostGIS). In order to add ESRI File Geodatabase layers, click the ![](http://docs.qgis.org/testing/en/_images/mActionAddOgrLayer.png) Add Vector Layer button. In the top pane, set the Source type to Directory. In the bottom pane, set the Type dropdown to either "OpenFileGDB".^[The OpenFileGDB driver is a read-only, open source driver. Computers with ArcGIS installed may have an option for the "ESRI FileGDB" driver. Since we will not be making any changes to the data, we can use the OpenFileGDB driver. If you intended to alter any of the data, you would have to use the native ESRI FileGDB driver.] The dialog should look like this:
+Now let's add some data. QGIS allows you to easily add file-based data (such as shapefiles) as well as data from web map services (WMS, WCS, WFS) and spatial databases (such as PostGIS). In order to add ESRI File Geodatabase layers, click the ![](http://docs.qgis.org/testing/en/_images/mActionAddOgrLayer.png) Add Vector Layer button. In the top pane, set the Source type to Directory. In the bottom pane, set the Type dropdown to "OpenFileGDB".^[The OpenFileGDB driver is a read-only, open source driver. Computers with ArcGIS installed may have an option for the "ESRI FileGDB" driver. Since we will not be making any changes to the data, we can use the OpenFileGDB driver. If you intended to alter any of the data, you would have to use the native ESRI FileGDB driver.] The dialog should look like this (the exact path will depend on where you downloaded your data):
 
 ![](images/QgisOpenFileGdb.png)\ 
 
 You should then see a list of layers to be added. You can control-click to select multiple layers, or hit Select All to add all of them. Add as many as you want, but at least the following:
 
 * `ACS_2014_5YR_STATE`: This contains the geometry data
-* `STATE_METADATA_2014`: This contains the column names and meanings, for example `B02001e5` = "RACE: Asian along: Total population -- (Estimate)".
+* `STATE_METADATA_2014`: This contains the column names and meanings, for example `B02001e5` = "RACE: Asian alone: Total population -- (Estimate)".
 * `X02_RACE`
 * `X19_INCOME`
 
@@ -62,6 +62,14 @@ The `ACS_2014_5YR_STATE` should still be selected in the Layers Panel. (If it is
 
 # Cartographic Display of Demographic Data
 
+## Selecting a Projection
+
+Each spatial layer has a projection associated with it, which is a set of equations that determine how the curved surface of the earth is represented on a two-dimensional sheet of paper or computer screen. QGIS defaults to showing the data in latitude and longitude. We want to use a projection appropriate for the Continental US. Click the Project CRS button in the lower right of the QGIS window (looks like a globe with the text "EPSG:4326" next to it). The Project Properties dialog will open to the CRS tab. We're going to use the US National Atlas Equal Area projection. You can search for it by typing "national atlas" into the filter. Then click the name of the projection in the lower pane:
+
+![](images/QgisCrs.png)\ 
+
+Hit OK to apply it, and zoom in to roughly the area of the Continental US (that is, the area not including Alaska, Hawaii, and Puerto Rico).
+
 ## Create a Choropleth Map
 
 A **choropleth** map is a map that colors the geographic entity (states in this tutorial) based on the value of underlying attribute data. Choropleths should virtually never be used to represent raw count data! They should be used for densities (population per unit area), rates (cases or incidents, such as a disease or crime, per population), or proportions (such as percent of the population in a racial or ethnic group). Let's make a map of the percent of the population in each state which is African-American.
@@ -69,7 +77,7 @@ A **choropleth** map is a map that colors the geographic entity (states in this 
 Open the Layer Properties dialog and select the Style tab in the left pane. At the top, the symbol type for a new layer is set to a default of Single Symbol.
 
 1. Click the dropdown that says "Single Symbol" and change it to "Graduated", which is appropriate for numeric data.
-2. In the Column box, you can use the dropdown to select a column name, type in an expression, or click the Expression Editor button ![](http://docs.qgis.org/testing/en/_images/mIconExpressionEditorOpen.png). The field representing "Black or African American alone" is `B02001e3`. The field representing "Total Population" is `B02001e1`. Therefore, you can show the percentage African American by typing the following formula into the box: `100 * B02001e3 / B02001e1`.
+2. In the Column box, you can use the dropdown to select a column name, type in an expression, or click the Expression Editor button ![](http://docs.qgis.org/testing/en/_images/mIconExpressionEditorOpen.png). The field representing "Black or African American alone" is `B02001e3`. The field representing "Total Population" is `B02001e1`. Therefore, you can show the percentage African American by typing the following formula into the box: `100 * race_B02001e3 / race_B02001e1`.
 3. Select a **sequential** color ramp from the Color ramp dropdown. A sequential color ramp is one that progresses from light to dark. A **diverging** color ramp is light in the middle but progresses to two different hues (e.g. blue and bronw) at the extremes.
 4. In the Mode dropdown, choose "Natural Breaks (Jenks)".
 5. Set the number of classes to either 5 or 7.
@@ -111,9 +119,9 @@ In order to create a print layout, we set it up in a separate window called the 
 
 ## Adding the Map
 
-Now we will add the main map. Click the `Add new map` button ![](images/QgisAddNewMap.png). Place your map on the page by clicking and dragging over the area that you want the image to fill. Draw the map to cover the left two-thirds of the page. Leave room for a title at top, and a legend to the rigth. *The snap-to-guides feature will not be in effect while tracing the dimensions of new layout item,* so after you draw it, drag it so that it snaps to the upper-left corner of the layout, then grab the lower-right corner and drag it so that it snaps to the desired position. The Median Income layer and the OpenStreetMaps layer should be visible. 
+Now we will add the main map. Click the `Add new map` button ![](images/QgisAddNewMap.png). Place your map on the page by clicking and dragging over the area that you want the image to fill. Draw the map to cover most of the page. Leave room for a title at top, and a legend to the right. *The snap-to-guides feature will not be in effect while tracing the dimensions of new layout item,* so after you draw it, drag it so that it snaps to the upper-left corner of the layout, then grab the lower-right corner and drag it so that it snaps to the desired position. The Median Income layer and the OpenStreetMaps layer should be visible. 
 
-At this point you may want to adjust the viewable area of both your main map and your locator map. Click the `Move item content` button ![](images/QgisMoveItemContent.png). You can now click within the map frame to reposition it. You can use the scroll wheel on your mouse to move in and out (although the zoom steps may be somewhat gross). There is no click-and-drag zoom tool (the magnifiying glass), but you can switch back to the main QGIS window, zoom to desired level, then switch back to the Print Composer and hit the Refresh button. It's very hard to give precise instructions about how to do this--just play around with the tools. You want the metropolitan area to fill the area of the main map.
+At this point you may want to adjust the viewable area of your map. Click the `Move item content` button ![](images/QgisMoveItemContent.png). You can now click within the map frame to reposition it. You can use the scroll wheel on your mouse to move in and out (although the zoom steps may be somewhat gross). There is no click-and-drag zoom tool (the magnifiying glass), but you can switch back to the main QGIS window, zoom to desired level, then switch back to the Print Composer and hit the Refresh button. It's very hard to give precise instructions about how to do this--just play around with the tools. You want the metropolitan area to fill the area of the main map.
 
 ## Adding Supporting Elements to the Page
 
@@ -123,7 +131,7 @@ Click the `Add new legend` tool ![](images/QgisAddNewLegend.png) and drop a lege
 
 ## Exporting the Image
 
-You export your map to several formats. There are three options: PDF, SVG, and Image. Export this one to PDF. SVG stands for Scalable Vector Graphics, and is theoretically a good format for much digitial imagery, but the SVG export option in QGIS is buggy, so you should avoid it for now. Choosing `Export as Image` actually gives the option of a wide variety of image formats, including PNG which is a good choice for web images.
+You export your map to several formats. There are three options: PDF, SVG, and Image. PDF is a good format for maps intended to be printed. SVG stands for Scalable Vector Graphics, and is theoretically a good format for much digitial imagery, but the SVG export option in QGIS is buggy, so you should avoid it for now. Choosing `Export as Image` actually gives the option of a wide variety of image formats, including PNG which is a good choice for web images.
 
 # ASSIGNMENT
 
@@ -133,4 +141,4 @@ Add the MSA (Metropolitan/Micropolitan Statistical Area) data that you also down
 2. Join the race data to the MSA layer.
 3. In the Style tab, create a single-symbol symbology for the MSA, but make the symbol invisible (no fill, no border).
 4. Add a diagram to the MSA that is a pie chart with major racial categories as the wedges, and symbol size controlled by total population. These should be the same column (`B02001e...`) that you used earlier in the exercise.
-5. Create a layout and export it to PDF.
+5. Create a layout and export it to PNG using `Export as Image`.
