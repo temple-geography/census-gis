@@ -1,6 +1,5 @@
 % Introduction to American Community Survey with QGIS
 % Prof. Hachadoorian
-% Summer II 2016
 
 # Overview
 
@@ -115,7 +114,7 @@ Note that the Pie Chart is also what you would use to set a proportional symbol 
 
 ## Setting up the Layout
 
-In order to create a print layout, we set it up in a separate window called the Print Composer. Choose `Project→New Print Composer`. A window will open up that, as with desktop publishing software, looks like a piece of paper on a pasteboard. Before adding any elements, let's set up the window to make it easy to work with visually. In the lower right, you will see a panel with three tabs: Composition, Item Properties, and Atlas Generation. Choose the Composition tab. Under `Paper and quality`, choose the preset for "ANSI A (Letter; 8.5x11 in)". Check `Snap to grid` and set the spacing to 4.23 mm. (This is roughly equal to 1/6", which in desktop publishing is known as a **pica**.) The symbol is a bit thick, so you might want to make the `Pen width` something like 0.2 mm. 
+In order to create a print layout, we set it up in a separate window called the Print Composer. Choose `Project→New Print Composer`. A window will open up that, as with desktop publishing software, looks like a piece of paper on a pasteboard. Before adding any elements, let's set up the window to make it easy to work with visually. In the View menu, select the options to `Show Grid` and `Snap to Grid`. In the lower right, you will see a panel with three tabs: Composition, Item Properties, and Atlas Generation. Choose the Composition tab. Under `Paper and quality`, choose the preset for "ANSI A (Letter; 8.5x11 in)". The set the grid spacing to 4.23 mm. (This is roughly equal to 1/6", which in desktop publishing is known as a **pica**.)
 
 ## Adding the Map
 
