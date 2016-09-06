@@ -1,6 +1,5 @@
 % Calculating the Index of Dissimilarity
 % Prof. Hachadoorian
-% Summer II 2016
 
 # Overview
 
