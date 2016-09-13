@@ -52,6 +52,26 @@ You will see the spatial layer `acs2014_philly_housing`. Select it and hit Add.
 
 Now open the Add SpatiaLite Layer dialog again. Table `ts_county_housing` did not appear in the list because it is not a spatial layer. Click the check box at the bottom for "Also list tables with no geometry". Then select `ts_county_housing` from the list and hit Add.
 
+# Using DB Manager
+
+QGIS has a built-in database manager that can be used to examine and manage SpatiaLite (and other) spatial database sources. To open it, select Database->DB Manager->DB Manager from the menu, or click the DB Manager icon ![](http://docs.qgis.org/testing/en/_images/dbmanager.png) on the toolbar.
+
+Once in DB Manager, you can expand the SpatiaLite/Geopackage branch to view registered SpatiaLite databases. Since you just added a connection to `acs2014_philly_msa_housing.sqlite`, you should see it in the list. Click the Info and Table tabs for both layers, and the Preview tab for the spatial layer.
+
+**IMPORTANT NOTE:** QGIS has a bug in the way that it interacts with SpatiaLite. We will be adding new fields, and they will be added in the database, but QGIS may not display them correctly. If after using the Field Calculator to add a new field you find that it does not seem to be in the attribute table, or that it is being treated as text instead of numeric, you will need to follow these steps. In order to fix this, we will use DB Manager to run a SQL command in the SpatiaLite database. Go to Database->SQL, or hit `F2`. In the editor window that opens, paste the following text:
+
+```sql    
+UPDATE geometry_columns_statistics set last_verified = 0;
+```    
+
+Hit the Execute button. Then replace the text with:
+
+```sql
+SELECT UpdateLayerStatistics('geometry_table_name');
+```
+    
+Again, hit the Execute button. Close the window and examine your data in QGIS to see if this fixed the problem.
+
 # Calculating Tract-Level Housing
 
 ## Estimating Tract-Level Housing Based on Year Structure Built
@@ -68,15 +88,13 @@ In the Expression editor, enter the following formula ` "b25036e8"  +  "b25036e9
 
 ![](images/QgisFieldCalculatorHousing.png)\ 
 
-Editing will be turned on for the layer. Make sure to save ![](http://docs.qgis.org/testing/en/_images/mActionSaveEdits.png) your edits periodically. 
+Editing will be turned on for the layer. Make sure to save your edits periodically. 
 
 > **TIP:** Keep in mind that saving edits to the *layer* is not the same as saving your QGIS map! When you add columns to the layer, you save changes to the data source, which in this case is the SpatiaLite file `acs2014_philly_msa_housing.sqlite`. When you save changes to your map, you are saving a file with a `*.qgs` extension, such as `Lab4.qgs`.
 
-Now that you have done that for 1970, creating housing estimate columns for 1980, 1990, 2000, and 2010. In each case, remember that the estimate should only include housing built up to the *prior* decade. For 2010, only add columns up to `Built 2000 to 2009`. Do ***not*** include `Built 2010 or later`.
+Now that you have calculated a housing estimate for 1970, create similar columns for 1980, 1990, 2000, and 2010. In each case, remember that the estimate should only include housing built up to the *prior* decade. For 2010, only add columns up to `Built 2000 to 2009`. Do ***not*** include `Built 2010 or later`.
 
-> **TIP:** Toggle editing off ![](http://docs.qgis.org/testing/en/_images/mActionToggleEditing.png) each time you add a new column. It appears that changing the table structure confuses QGIS's data connection, and adding two or more fields will look like it is working, but the field will disappear when the project is closed. After toggling editing off, refresh ![](http://docs.qgis.org/testing/en/_images/mActionDraw.png) the table to make sure the new data is really there.
-
-Note that when constructing later year estimates, you can make things easier by using your previously calculated columns. For example, when calculating the housing estimate for 1980, instead of adding every decade, you can just add the housing built in the 1970s to your previously calculated `housing_est_1970`. However, make sure to toggle off editing in between creating new fields, as discussed in the previous tip.
+> **TIP:** Your new columns may not appear until you run the SQL commands indicated above (`UPDATE geometry_columns...`, etc.). Before doing this, toggle editing off ![](http://docs.qgis.org/testing/en/_images/mActionToggleEditing.png). Until you do so, the data is kept in the QGIS attribute table, but not committed to the SpatiaLite database. Toggling editing off will write your data to disk.
 
 ## Adjusting Tract-Level Housing Estimate Based on County-Level Totals
 
@@ -84,9 +102,9 @@ Housing units from previous decades may have been demolished, in which case they
 
 A simple way to adjust the count, is to use the county-level housing counts from previous censuses, and adjust the tract-level count proportionally. The estimates calculated in the previous step are aggregated to the county level and compared to the official county-level housing unit count. If the aggregated estimates show 100,000 housing units in 1980 and the official county count is 110,000, then each tract estimate is multiplied by 1.1 (110,000/100,000).
 
-In order to calculate the aggregate housing by county, as well as in order to join these two tables, we need a single join column that uniquely identifies each county. This filed must combine the values from `STATEFP`, which is the two-digit state FIPS code, and `COUNTYFP`, which is the three-digit county FIPS code, into a unique five-digit identifier. Therefore in *both* tables, use the Field Calculator ![](http://docs.qgis.org/testing/en/_images/mActionCalculateField.png) to create a new field of type "Text" named `county_fips5`. Set it equal to `"STATEFP" || "COUNTYFP"`. (The double-pipe `||` is the string concatenation symbol.)
+In order to calculate the aggregate housing by county, as well as in order to join these two tables, we need a single join column that uniquely identifies each county. This field must combine the values from `STATEFP`, which is the two-digit state FIPS code, and `COUNTYFP`, which is the three-digit county FIPS code, into a unique five-digit identifier. Therefore in *both* tables, use the Field Calculator ![](http://docs.qgis.org/testing/en/_images/mActionCalculateField.png) to create a new field of type "Text" named `county_fips5`. Set it equal to `"STATEFP" || "COUNTYFP"`. (The double-pipe `||` is the string concatenation symbol.)
 
-Make sure to Save Edits ![](http://docs.qgis.org/testing/en/_images/mActionSaveEdits.png) for both layers.
+Make sure to Save Edits for both layers. Check that your new fields are in the attribute table---if they are not, run the SQL commands indicated above (`UPDATE geometry_columns...`, etc.) in the DB Manager SQL Window.
 
 ### Calculating County-Level Estimate Based on Year Structure Built
 
@@ -122,13 +140,15 @@ Now open the attribute table for `acs2014_philly_housing`, and open the Field Ca
 * Output field type = "Decimal number (double)`
 * Expression: `"housing_est_1970" * "A41AA1970" / "county_est_1970"`
 
-Hit OK. Save edits and Toggle editing off. Then repeat for 1980, 1990, 2000, and 2010. Make sure to Save edits after each field calculation.
+Hit OK. Save edits and Toggle editing off. Then repeat for 1980, 1990, 2000, and 2010. Make sure to Save edits after each field calculation, and if necessary run the SQL commands indicated above (`UPDATE geometry_columns...`, etc.) in the DB Manager SQL Window.
 
 # ASSIGNMENT
 
 Create a map showing the change between two time periods of your choice. For a choropleth map, choose a Graduated style. Set the column to an expression that converts the growth to a percentage. For example, to show growth between 1970 and 1990, you would use the following expression (which you can build using the expression editor ![](http://docs.qgis.org/testing/en/_images/mIconExpressionEditorOpen.png):
 
-`100 * ("housing_adj_1990" - "housing_adj_1970") / "housing_adj_1970"`\ 
+```
+100 * ("housing_adj_1990" - "housing_adj_1970") / "housing_adj_1970"
+```
 
 You can experiment with other types of map, if you would rather not create a choropleth map.
 
