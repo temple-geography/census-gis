@@ -9,7 +9,12 @@ Because census tracts change over time, comparisons of population change can be 
 
 # Data
 
-We will be using data from two sources, tract-level data of the year a housing structure was built from ACS table B25036 and time series of county-level counts of housing structures from NHGIS. Extracts from these data sets for the Philadelphia-Camden-Wilmington MSA have been imported into a SpatiaLite database, which can be downloaded from <https://www.dropbox.com/s/jz5jnakgssz7m6c/acs2014_philly_msa_housing.sqlite?dl=0>. **NOTE: You can reuse the previously downloaded data, even though you have made some changes to the tables.**
+We will be using data from two sources, tract-level data of the year a housing structure was built from ACS table B25036 and time series of county-level counts of housing structures from NHGIS. Extracts from these data sets for the Philadelphia-Camden-Wilmington MSA have been imported into a SpatiaLite database, which can be downloaded from <https://www.dropbox.com/s/jz5jnakgssz7m6c/acs2014_philly_msa_housing.sqlite?dl=0>. 
+
+> **NOTE: If you completed the exercise [Housing Growth by Decade](https://github.com/temple-geography/census-gis/blob/master/Housing%20Growth%20by%20Decade.md), the names of the fields that you created in that exercise will conflict with the fields you create in this exercise. Therefore, you have two options:**
+> 
+> 1. Redownload the data. You can rename the old database or the new database. Just make sure to pay attention to which one you are working with.
+> 2. When you follow the instructions for this exercise, you can differentiate the field names output field names, e.g. by adding `_new` to the end of the column names. You don't have to do this for the join field (`county_fips5`), but you should do it for all other fields, e.g. `housing_est_1970_new`, `county_est_1970_new`.
 
 ACS Table B25036 has the following structure:
 
@@ -192,6 +197,11 @@ Your query is now complete! Even though this data table is being constructed "on
 ![](images/DbManagerLoadAsNewLayer.png)  
 
 Make sure that "Column with unique values" is set to `gid` and "Geometry column" is set to `geometry`. You may optionally assign a name to the layer, which is the name that will appear in the QGIS Layers Panel. I have chosen `historical_housing`. When you are done, the hit Load now! button.
+
+# Adding a Basemap from the Web
+
+The OpenLayers plugin allows QGIS to display web maps, such as Google Maps or OpenStreetMaps. This allows you to display reference features such as place names and major highways. It helps the map reader visually orient themselves and can make a convenient base layer for a thematic map, such as the choropleth we will complete for this assignment.
+
 
 # ASSIGNMENT
 
