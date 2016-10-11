@@ -56,22 +56,24 @@ As in the previous lab exercise, we need to do an **aggregate query** using the 
 ```sql
 SELECT geoid, 1.0 * sum(resarea) AS tract_resarea, avg(b02001e1) AS tract_pop
 FROM lab_data.parcel JOIN lab_data.acs2014_tract_race
-  ON ('36061' || tract2010 || '00' = acs2014_tract_race.geoid)
+  ON ('36061' || tract2010 || '00' = geoid)
 GROUP BY geoid
 ```
 
+Multiplying by `1.0` is a trick to change the result from an integer to a decimal value.
+
 You should see the `geoid`, along with the tract population and total residential floor area (`tract_resarea`), for each of the seven tracts.
 
-Save this query as a view named `vw_tract_resarea`. (Again, refer to the previous lab exercise if you don't remember how to do any of these steps.)
+Click the "Save view" button to save this query as a view named `vw_tract_resarea_` followed by your initials, e.g. `vw_tract_resarea_lh`. Do not use capital letters.
 
 ## Calculate the Persons in Living in Each Residential Parcel
 
 Construct another query, as above. The query will have the following input tables:
 
 * `parcel`: Needed to determine the residential area of each parcel
-* `vw_tract_resarea`: Needed to determin the total residential area of each tract, as well as the population to allocate within the tract.
+* `vw_tract_resarea`: Needed to determine the total residential area of each tract, as well as the population to allocate within the tract.
 
-The join should be exactly the same as the query above, and no `GROUP BY` clause will be used. However, you have to calculate the persons and population density for each parcel. The `SELECT` list also needs to include a unique identifier and the geometry to map. I have stubbed out the query below:
+The join will be similar to the query above, but you will replace `lab_data.acs2014_tract_race` with the view you created in the previous step (beginning `vw_tract_resarea_`), and no `GROUP BY` clause will be used. However, you have to calculate the persons and population density for each parcel. The `SELECT` list also needs to include a unique identifier and the geometry to map. I have stubbed out the query below:
 
 ```sql
 SELECT gid, geom, bbl,
@@ -79,5 +81,7 @@ SELECT gid, geom, bbl,
   [expression] / ST_Area(geom) AS persons_per_sqft
 FROM [...]
 ```
+
+The expression (use the same expression in both places), should divide the *parcel* residential area by the total *tract* residential area, and multiply by tract population. As in the previous query, you may want (or have) to multiply by `1.0` to convert integer inputs to decimal values.
 
 When the query is running satisfactorily, load the result as a QueryLayer. Remove the tract layer. Create a choropleth using the `persons_per_sqft` column. Add a basemap using the OpenLayers plugin.
