@@ -54,7 +54,7 @@ Launch DB Manager in QGIS. Connect to the PostGIS Kropotkin database by expandin
 As in the previous lab exercise, we need to do an **aggregate query** using the SQL `GROUP BY` clause. We *could* do a spatial join, but attribute joins are processed faster. The `parcel` layer does not have a `geoid` field, but it does have a four-digit tract number. We will *construct* a geographic identifier that matches the `geoid` field in `acs2014_tract_race`. Enter the following text in the SQL window and Execute to view the results:
 
 ```sql
-SELECT geoid, 1.0 * sum(resarea) AS tract_resarea, , avg(b02001e1) AS tract_pop
+SELECT geoid, 1.0 * sum(resarea) AS tract_resarea, avg(b02001e1) AS tract_pop
 FROM lab_data.parcel JOIN lab_data.acs2014_tract_race
   ON ('36061' || tract2010 || '00' = acs2014_tract_race.geoid)
 GROUP BY geoid
