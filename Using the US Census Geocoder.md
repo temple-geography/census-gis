@@ -100,7 +100,7 @@ Now we are able to join the housing data to our tracts shapefile.  Perform a spa
 Assignment 
 ==========
 
-Create two side-by-side choropleth maps comparing foreclosure rate in Philadelphia with some other demographic attribute along census tracts, which you think may be related to foreclosures (ie: race, income, poverty rate, etc.). Use the ACS 2014 data from previous labs. Make sure to set an appropriate projection. Include a title and legend that adequately communicate the relationship your two maps describe.
+Create two side-by-side choropleth maps comparing foreclosure rate in Philadelphia with some other demographic attribute along census tracts, which you think may be related to foreclosures (ie: race, income, poverty rate, etc.). Include a title and legend that adequately communicate the relationship your two maps describe.
 
 
 *Hint: In order to create the choropleth map for foreclosure rate, make sure to use the Expression Dialog under the Graduated Symbology section.* 
