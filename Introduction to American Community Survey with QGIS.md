@@ -11,44 +11,61 @@ Downloading Data from NHGIS
 
 American Community Survey data are available from a wide variety of US Census Bureau and value-added sources such as the USCB's FTP server, American Fact Finder, National Historical GIS, and Social Explorer. Census data has two important parts: geographies (spatial layers) and demographic tables (attribute tables).
 
-Go to the NHGIS user's guide at <https://www.nhgis.org/user-resources/users-guide> and watch the first video tutorial, "NHGIS Data Finder (general overview)". After watching the video return to the NHGIS website and click the Select Data link in the left-hand menu.
+Go to the NHGIS user's guide at <https://www.nhgis.org/user-resources/users-guide> and watch the first video tutorial, "NHGIS Data Finder (general overview)". After watching the video return to the NHGIS website.
 
-On the Apply Filters page, begin by setting Geographic Levels to State, and then set Year to 2015 or a recent year of interest. Note that if you select a year from the Decennial Years column, you will get Decennial Census data, whereas a year or year range from the other columns will get American Community Survey data. The list of available files at the bottom of the page (Select Data) will update as you apply these filters.
+> You will have to create an account with IPUMS to download data. You may do that at this point (click the LOGIN link, then follow the link to create a new account), or you will be prompted to do so automatically when you attempt to create a data extract.
 
-For this tutorial I am going use data on race and Hispanic origin. For the ACS, this is table B03002. You may use this year and topic to follow along, or you may pick another topic. Pick something that represents a break down of total population or housing. For example, you could choose sex, employment, housing occupancy, etc, which break into categories, such as male and female, or renter/owner/vacant. Do not *only* pick a statistical aggregate, such as median age or median income.
+Click the Select Data link in the left-hand menu. On the Apply Filters page, there are four filters to set, although we will set only three. Begin by setting Geographic Levels to State, and then set Years to 2015. Each time, hit the Submit button to apply the filter. The list of available data at the bottom of the page (Select Data) will update as you apply these filters.
 
-You can apply a topical filter, or just select the data table of interest in the Select Data area at the bottom of the page. Make sure to select at least one Source Table (these are the tables which hold the demographic data), and one GIS Boundary File (there should be only one if you apply a single Year and Geographic Level filter).
+For this tutorial I am going use data on race and Hispanic origin. For the ACS, this is table B03002. Select the Topics filter. Find "Hispanic Origin" in the list of topics. There are two green plus signs to the left. Click the left one. (As you can see, the right plus sign appears in a column labelled "BREAKDOWN FILTER". We will discuss what this means in a future class.) The image should turn into a checkbox:
 
-Depending on your web browser settings, you may be prompted for a location to save the file, or your browser may automatically save it to a default Downloads folder. Save it or copy it to a folder where you will store all your data for this course. If you are working on a lab computer, I highly recommend that you save all your data and all your work to your flash drive.
+![](images/NhgisTopicsFilter.png) 
 
-In each case you will end up with a ZIP files containing the downloaded data. Unzip the files using 7-Zip or your computer's ZIP utility. In many operating systems this can be accomplished by right-clicking the ZIP file in the file manager (Finder on Mac, Windows Explorer on Windows) and choosing "Extract Here" or a similar option. For the geographic files, **you will download a ZIP within a ZIP**, so make sure to completely unnest the data.
+Then hit Apply.
 
-The geographic data should have a reasonably informative name (in the example, I end up with `US_State_2015.shp` and associated files). The attribute data, however, gets a silly name that is partially based on how many NHGIS downloads you have done in the past (I end up with `nhgis0024_ds215_20155_2015_state.csv`). I suggest renaming the files. You have two choices:
+The subject table that we are interested in, B03002, should appear near the top of the list of "Source Tables" in the Select Data grid. As this subject table is widely used by researchers, the popularity meter in the second column should be full or nearly full. Hit the green plus sign to add this subject table to your Data Cart (note that the Data Cart updates in the upper right of the web page).
+
+> **Advanced:** You may use this year and topic to follow along, or you may pick another topic. If you make your own selection, you will have to create your own CSV Template file in the next section. Pick something that represents a breakdown of total population or housing. For example, you could choose sex, employment, housing occupancy, etc, which break into categories, such as male and female, or renter/owner/vacant. Do not *only* pick a statistical aggregate, such as median age or median income.
+
+The Select Data grid has two more tabs: "TIME SERIES", which we will not be using, and "GIS BOUNDARY FILES", which you should select. Based on our state and year filters, you should see only one available GIS Boundary File, which you should add to the Data Cart.
+
+In the Data Cart (upper right), hit CONTINUE, review your selections and hit CONTINUE again. On the Review and Submit page, you may choose to add a Description to your extract. The remaining defaults should be OK, and you can hit SUBMIT to begin your extract.
+
+You will be taken to the Extracts History page. You will need to follow two links to download your tables (in the Download Table Data column) and your boundary files (in the Download GIS Data column). These links may not immediately appear. You will get an email when the downloads are ready, but you can also just refresh the page after a few seconds (`Ctrl`+`R`) to see if the links are available. For an extract of this size, it shouldn't take more than 30 seconds or so.
+
+When you click the download links, depending on your web browser settings, you may be prompted for a location to save the file, or your browser may automatically save it to your Downloads folder. Save it or copy it to a folder where you will store all your data for this course. If you are working on a lab computer, I highly recommend that you save all your data and all your work to your flash drive.
+
+In each case you will end up with ZIP files containing the downloaded data. Unzip the files using 7-Zip or your computer's ZIP utility. In many operating systems this can be accomplished by right-clicking the ZIP file in the file manager (Finder on Mac, Windows Explorer on Windows) and choosing "Extract Here" or a similar option. You can also double-click to open the archive, then drag-and-drop the enclosed files to your desired location. For the geographic files, **you will download a ZIP within a ZIP**, so make sure to completely unnest the data. I would suggest flattening the folder hierarchy (your files may unzip to separate CSV and GIS folders, but combine them into one folder) so that all your data files are in a single folder, and deleting the downloaded ZIP files.
+
+The geographic data should have a reasonably informative name (in the example, I end up with `US_State_2015.shp` and associated files). The attribute data, however, gets a silly name that is partially based on how many NHGIS downloads you have done in the past (I end up with `nhgis0024_ds215_20155_2015_state.csv`). I suggest renaming the files. You have two reasonable choices:
 
 -   Conform to the ACS table name: `B03002_state_2015.csv`
 -   Give it a descriptive name: `Hispanic Origin by Race - State 2015.csv`
 
 Later in the course you may want to work with smaller geography data such as Census Tracts. Since this will contain geographies and data for many more units (currently there are approximately 74,000 census tracts in the US), the extract will be somewhat slower to create and the downloaded files will be larger.
 
-Preparing a CSV Template File
+Working with ACS Data in QGIS
 =============================
+
+Preparing a CSV Template File
+-----------------------------
 
 The attribute data that we downloaded from NHGIS is in a CSV (comma-separated values) text file. Because the file uses text, QGIS needs a hint in order to correctly recognize numeric data. We do this by creating a CSVT (for "CSV Template") file which contains a list of data types. You may use the data types String, Real (meaning decimal data), Integer, Time, and DateTime. [1]
 
-Open the codebook file that you downloaded with a spreadsheet software such as Excel. **Before you make any changes to the file, immediately Save As to create a new file with file as type "Text (CSV)".** You will notice that the codebook has a lot of information about the data, as well as a list of column names grouped into "Context Fields", "Estimates", and "Margins of Error". Get rid of **all** of the lines except for actual field names. Then replace each field name and description with either the word `String` or `Real`. All of the Context Fields, as well as the fields `NAME_E` and `NAME_M` should be set as `String`. All of the other fields represent quantiative data and should be replaced with the `Real` (for "real number").
+If you downloaded data for B03002, follow these steps to create the CSVT file:
 
-Makes sure to **delete** all non-field rows; that is, don't just clear the cell value, use the Delete Row button to make sure that the row is gone.
+1.  Open a text editor, such Notepad++.
+2.  Copy this line of text: `String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,String,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,String,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real,Real`
+3.  Paste the text into the text editor.
+4.  Save the file using the same basename as the CSV, but with the extension CSVT. For example, if you named the file you downloaded `B03002_state_2015.csv`, you want your new, CSV Template file to be named `B03002_state_2015.csvt`.
+5.  Close the text editor.
 
-Once all of the fields names have been replaced with data types, you need to turn this into a *row* of data types. Select the entire column of data types. Use `Ctrl`+`C` to copy the column. Right-click in the top left corner of the spreadsheet and choose "Paste Special". In the dialog box that appears choose "Transpose"
+If you downloaded a different subject table, you will also have to make your own CSVT header. Look in the codebook file for a complete list of column names. You will notice that the codebook has a lot of information about the data, as well as a list of column names grouped into "Context Fields", "Estimates", and "Margins of Error". You need to have one Data Type for each field name. All of the Context Fields, as well as the fields `NAME_E` and `NAME_M` should be set as `String`. All of the other fields represent quantitative data and should be set as `Real` (for "real number").
 
-Save and close the file. (Make sure the type is still CSV.) Open the file in a text editor such as Notepad++. You should see one line of text, which will begin:
+Depending on what subject table you download, you may have many field data types to set. In class, the instructor can show you how to quickly accomplish this using spreadsheet software.
 
-    String, String, String, String, String, String, ...
-
-If it looks good, close the file. Then rename it so that it matches the basename of your attribute file, but ends with `CSVT`. For example, if your downloaded attribute file is named `B03002_state_2015.csv`, you want your new, CSV Template file to be named `B03002_state_2015.csvt`
-
-Adding and Joining Data in QGIS
-===============================
+Adding Data in QGIS
+-------------------
 
 Open QGIS Desktop (*not* QGIS Browser) by double-clicking the icon on your desktop, or find it in the Start Menu in the OSGeo4W folder.
 
@@ -56,9 +73,12 @@ Open QGIS Desktop (*not* QGIS Browser) by double-clicking the icon on your deskt
 
 The central pane is where you will see the geographic data that you add. The left and right panes are dockable panels that can be torn off (grab the title bar of the panel) if you prefer floating panels in your workspace. We won't be using the Processing Toolbox today, so if it is open (by default in a right-hand panel) you can close it in order to increase the area avaialable for the map canvas. The left panel is the Layers pane. This will be an index of layers you have added.
 
-Now let's add some data. QGIS allows you to pretty easily add file-based data (such as shapefiles) as well as data from web map services (WMS, WCS, WFS) and spatial databases (such as PostGIS). As with many software, there are multiple ways to accomplish the same thing. I find that the easiest way to add data is to drag and drop from the Browser Panel on the left. Navigate to your unzipped data files, and drag the states shapefile (might be named something like `US_state_2010.shp`) to the map canvas. The state layer should appear. Then drag the CSV file (which I suggested you store in the same folder as the shapefile) to the map canvas. Because this file lacks geographic data, nothing should change. Switch back to the Layers Panel in the left-hand pane.
+Now let's add some data. QGIS allows you to pretty easily add file-based spatial data (such as shapefiles) as well as data from web map services (WMS, WCS, WFS) and spatial databases (such as PostGIS). As with many software, there are multiple ways to accomplish the same thing. I find that the easiest way to add data is to drag and drop from the Browser Panel on the left. Navigate to your unzipped data files, and drag the states shapefile (`US_state_2015.shp`, or whatever you downloaded) to the map canvas. The state layer should appear. Then drag the CSV file (which I suggested you store in the same folder as the shapefile) to the map canvas. Because this file lacks geographic data, nothing should change. Switch back to the Layers Panel in the left-hand pane.
 
-Although we haven't done much yet, it is a good idea to save your work early and often. Hit `Ctrl+S` to save your QGIS document. Make sure to save it to your flash drive or other working folder. As you continue to work, periodically hit `Ctrl+S`, especially after making any signficant changes to your map.
+Although we haven't done much yet, it is a good idea to save your work early and often. Hit `Ctrl+S` to save your QGIS document. Make sure to save it to your flash drive or other working folder. As you continue to work, periodically hit `Ctrl`+`S`, especially after making any signficant changes to your map.
+
+Joining a Spatial Layer to Attribute Data in QGIS
+-------------------------------------------------
 
 In order to map the demographic data, we need to join it to the spatial layer. Double-click the `US_states_2015` layer in the Layers Panel. In the left column, choose the Joins tab. At the bottom of the window hit the Green plus sign to open the Add vector join dialog. Choose a Join layer. (Since we are only using one attribute table in this exercise, the correct table should be selected.) Then choose `GISJOIN` as both the Join field (matching field in the Join layer) and Target field (matching field in the base table, which is usually your spatial layer).
 
@@ -70,7 +90,7 @@ After setting these parameters, your dialog should look like this:
 
 Hit OK. Then hit OK again to close the Layer Properties dialog.
 
-The `US_state_2015` layer should still be selected in the Layers Panel. (If it is not, single-click to select it.) Hit the Open Attribute Table toolbar button ![](http://docs.qgis.org/testing/en/_images/mActionOpenTable.png), or right-click the layer and select Open Attribute Table from the popup menu. Scroll to the right of the table grid to see the new columns that have been joined.
+The `US_state_2015` layer should still be selected in the Layers Panel. (If it is not, single-click to select it.) Hit the Open Attribute Table toolbar button ![](images/mActionOpenTable.png), or right-click the layer and select Open Attribute Table from the popup menu. Scroll to the right of the table grid to see the new columns that have been joined.
 
 Cartographic Display of Demographic Data
 ========================================
@@ -83,11 +103,11 @@ A **choropleth** map is a map that colors the geographic entity (states in this 
 Open the Layer Properties dialog and select the Style tab in the left pane. At the top, the symbol type for a new layer is set to a default of Single Symbol.
 
 1.  Click the dropdown that says "Single Symbol" and change it to "Graduated", which is appropriate for numeric data.
-2.  In the Column box, you can use the dropdown to select a column name, type in an expression, or click the Expression Editor button ![](http://docs.qgis.org/testing/en/_images/mIconExpressionEditorOpen.png). The field representing "Not Hispanic or Latino: Black or African American alone" is `ADK5E004`. The field representing "Total Population" is `ADK5E001`. Therefore, you can show the percentage African American by typing the following formula into the box: `100 * race_ADK5E004 / race_ADK5E001`.
+2.  In the Column box, you can use the dropdown to select a column name, type in an expression, or click the Expression Editor button ![](images/mIconExpression.png). The field representing "Not Hispanic or Latino: Black or African American alone" is `ADK5E004`. The field representing "Total Population" is `ADK5E001`. Therefore, you can show the percentage African American by typing the following formula into the box: `100 * race_ADK5E004 / race_ADK5E001`.
 3.  Select a **sequential** color ramp from the Color ramp dropdown. A sequential color ramp is one that progresses from light to dark. A **diverging** color ramp is light in the middle but progresses to two different hues (e.g. blue and bronw) at the extremes.
 4.  In the Mode dropdown, choose "Natural Breaks (Jenks)".
 5.  Set the number of classes to either 5 or 7.
-6.  If the list of classes with varying color symbols has not already appeared in the central white pane, click the Classify button just above it.
+6.  The appropriate number of classes, with varying color symbols, should appear in the central pane of the dialog box. If it does not appear (i.e., the central pane is blank), click the Classify button just above it.
 7.  Hit OK to see your map.
 
 Create a Proportional Symbol Pie Chart Map
@@ -144,6 +164,11 @@ Exporting the Image
 -------------------
 
 You can export your map to several formats. There are three options: PDF, SVG, and Image. PDF is a good format for maps intended to be printed. SVG stands for Scalable Vector Graphics, and is theoretically a good format for much digitial imagery, but the SVG export option in QGIS is buggy, so you should avoid it for now. Choosing `Export as Image` actually gives the option of a wide variety of image formats, including PNG which is a good choice for web images.
+
+DELIVERABLES
+============
+
+Export two PNG images of your map. One with diagrams (pie charts) displayed, and one without diagrams (i.e., just the choropleth of percent African-American population by state). Upload to the course LMS.
 
 [1] See <http://www.gdal.org/drv_csv.html> for additional documentation. Note that more recent versions of the OGR library that QGIS uses for data import can determine data type automatically, making this step unnecessary.
 
