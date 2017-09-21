@@ -110,9 +110,9 @@ Open the Layer Properties dialog and select the Style tab in the left pane. At t
 
 Magnitude data, like counts, can be represented using a so-called **proportional symbol map**, where a symbol such as a circle is sized relative to the underlying data values. (Sometimes, usually by non-geographers, this is referred to as a bubble map or bubble chart.) For data that adds up to a total, we may display the result using a pie chart. The pie chart size is controlled by total population, and the pie chart itself shows the components of the total. For example, for housing, you could display a pie chart with wedges showing renter-occupied, owner-occupied, and vacant housing. We will display a pie chart showing wedges based on the count of population of a given race. (For the present exercise, we will ignore the categories "Some other race" and "Two or more races".)
 
-To add the pie charts, open the Layer Properties dialog and click the Diagrams tab in the left-hand pane. Then check the box "Show diagrams for this layer" at the top of the dialog. The Diagram type should default to Pie chart, but if it doesn't select it from the dropdown.
+To add the pie charts, open the Layer Properties dialog and click the Diagrams tab in the left-hand pane. The default setting is "No diagrams", and all the controls will be disabled (grayed out). Set the dropdown to "Pie chart". Now the controls are enabled, and you can set the parameters for the pie chart you want to create.
 
-There are five settings groupings: Attributes, Appearance, Size, Placement, and Options. We will make changes in three of them:
+There are five settings groupings: Attributes, Appearance, Size, Placement, Options, and Legend. We will make changes in three of them:
 
 * Attributes: Look in the codebook to determine which fields represent which attributes. Select the fields for the following categories, and click the green plus sign so that they appear in the Assigned attributes pane:
     * Not Hispanic or Latino: White alone
@@ -121,17 +121,19 @@ There are five settings groupings: Attributes, Appearance, Size, Placement, and 
     * Not Hispanic or Latino: Asian alone
     * Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
     * Hispanic or Latino (all races)
+    Additionally, double-click in the Legend column and change the field name to descriptive text that will appear in the legend:
+    
+    ![](images/QgisPieChartAttributes.png)\ 
+
 * Size: Click the Scaled size radio button
     * Attribute: Set to `race_ADK5E001`, which is the total population of all races
-    * Maximum value: Click the Find button to determine the largest value in the selected field, `race_ADK5E001`. **NOTE: As of QGIS 2.14.3, this appears not to work with joined data. Therefore, you may have to exit this dialog and inspect the attribute table yourself to find the largest value. You can do this by clicking on the top of the `race_ADK5E001` column to sort the data in that column.**
-    * Size: This number represents the Area (default) or Diameter of pie chart. For magnitude data, you always want this to be the Area. The default is 50. Depending on your map, this symbols may be too large or too smale. For this data at this scale, I would suggest experimenting with values between about 15 and 30. (See image below.)
+    * Maximum value: Click the Find button to determine the largest value in the selected field, `race_ADK5E001`.^[In some versions of QGIS, such as 2.14.3, this appears not to work with joined data. Therefore, you may have to exit this dialog and inspect the attribute table yourself to find the largest value. You can do this by clicking on the top of the `race_ADK5E001` column to sort the data in that column. This was fixed sometime during QGIS 2.14.x or 2.16.x.]
+    * Size: This number represents the Area (default) or Diameter of pie chart. For magnitude data, you always want this to be the Area. The default is 50. Depending on the scale of your map, the symbols may be too large or too small. For this data at this scale, I would suggest experimenting with values between about 15 and 30. (See image below.)
 * Placement: Set the Placement dropdown to Over Centroid
 
 ![](images/QgisPieChartSize.png)\ 
 
 Click OK to close the dialog.
-
-Note that the Pie Chart is also what you would use to set a proportional symbol for a single magnitude value, like total population. Just choose a single value in the Attributes panel and choose the same attribute to control the size in the Size panel.
 
 # Creating a Print Layout
 

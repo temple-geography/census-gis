@@ -4,16 +4,60 @@
 # Overview
 
 * Become familiar with the Index of Dissimilarity
-* Perform a basic operation in the Processing Toolbox
-* Map a bivariate relationship
+* Download data using the Census API
+* Plot a bivariate relationship
+
+# Preparation
+
+The code for this exercise is available as a separate file: [index_of_dissimilarity.R](index_of_dissimilarity.R). Download it and execute the code chunks as you read the explanation below.
+
+First, load all the necessary packages. We will be working with the tidycensus package, which allows us to download Census data, including spatial layers for mapping. 
+
+```r
+library(tmap)
+library(tidyverse)
+library(tidycensus)
+library(sf)
+```
+
+You will need a Census API key to download this data. If you are working on a personally owned computer, you should previously have installed this key to your R environment, so that you don't have to load it every time. If you are working on a public computer, run the following line of code with your own Census API key. The key will remain available until you close your R (RStudio) session.
+
+```r
+census_api_key("REPLACE_WITH_YOUR_CENSUS_API_KEY") 
+```
 
 # Data
 
-We will work with a database of state and tract level data on race and ethnicity. I have taken the ACS subject table `B03002` and prejoined it to the state and tract geographies. I have put his in a SpatiaLite database, a type of geodatabase based on the open source SQLite database format. The source data can be downloaded from <https://www.dropbox.com/s/34fb99yva4nzyyz/acs2014_5yr_hispanic.sqlite?dl=0>. Unlike with the OpenFileGDB driver, you will be able to edit this data, including adding new fields to the attribute table.
+We will be working with subject table `B03002`, which contains data on Hispanic and Latino Origin By Race. This exercise will demonstrate calculating the Black/White index of dissimilarity, $D$. However the instructions also download counts for Asians and Hispanics. Hispanic origin is considered to be an "ethnicity", not a "race". We will download the variables that represent Hispanics of any race, and the variables that represent non-Hispanic persons of each race category.
 
-Download the database to your flash drive or local working folder. To add the data, you first have to "Connect" to this file-based geodatabase. Go to `Layer→Add Layer→Add SpatiaLite Layer…` or click the SpatiaLite (feather) icon ![](http://docs.qgis.org/testing/en/_images/mActionAddSpatiaLiteLayer.png) on the toolbar. The dialog will list previously connected databases in the top dropdown box. 
+```r
+# Variables of interest: White, Black, Asian, Hispanic
+race_vars = c("B03002_003", "B03002_004", "B03002_006", "B03002_012")
+```
 
-Now you are back in the `Add SpatiaLite Table(s)` dialog. The new connection should be selected in the dropdown. (When you work with this in the future, you can select any previously created database that you want to connect to.) Hit the Connect button to view the available spatial layers. This particular database has only two layers, `state_hispanic` and `tract_hispanic`, but SpatiaLite databases can contain many more. Select both layers, then click the Add button and close the dialog. You will see the layers listed in the Layers pane.
+We then download this data for both states and tracts, as the index of dissimilarity (see below) requires data for a region (we will use states) and population units that nest with that region (we will use Census tracts). Because the ACS variable names are not very easy to work with, we will rename the variables. We will also drop the margins of error (which are included in the download), and extract the state FIPS code from the Census tract GEOID so that we can join the two tables.
+
+We will be mapping $D$ by state, so we set `geometry = TRUE` for the state download. The default for this parameter is `FALSE`, so we leave it out for the tract download. The tract download should take several seconds. If you include the geometries, it will take quite a bit longer.
+
+```r
+sfStates = get_acs(
+  geography = "state", variables = race_vars, endyear = 2015, 
+  output = "wide", geometry = TRUE
+)
+sfStates = select(sfStates, state = GEOID, name = NAME, white = B03002_003E, 
+       black = B03002_004E, asian = B03002_006E, hispanic = B03002_012E)
+dfTracts = get_acs(
+  geography = "tract", variables = race_vars, endyear = 2015, 
+  output = "wide", state = sfStates$state
+)
+dfTracts = transmute(
+  dfTracts, state = substr(GEOID, 1, 2), tract = GEOID, 
+  name = NAME, white = B03002_003E, black = B03002_004E, asian = B03002_006E, 
+  hispanic = B03002_012E
+  )
+```
+
+We name the data objects `sfStates` and `dfTracts`. I use the prefix `sf` for the object that stores the state data because is a **simple features** object, a geographic format that stores the geometries (shapes) in an additional column named `geometry`. I use the `df` prefix for the object that stores the tract data because it is a **data frame**.[^This is technically untrue. It is actually a tibble. But since a tibble is a tidyverse improvement to the base R data frame, we're treating it as the same as a data frame.] Look at both objects in RStudio's built-in viewer.
 
 # Calculating the Index of Dissimilarity
 
@@ -25,68 +69,52 @@ $$D = \frac{1}{2} \sum_i \left|\frac{a_i}{A} - \frac{b_i}{B} \right|$$
 ![](images/EqnIndexOfDissimilarity.png)\ 
 -->
 
-First let's determine what fields we will use. You may choose to calculate Black-White dissimilarity, or Hispanic-White dissimilarity. Look at the ACS metadata^[<http://www2.census.gov/programs-surveys/acs/summary_file/2014/documentation/user_tools/ACS_5yr_Seq_Table_Number_Lookup.txt>, or documentation that you have previously downloaded] for table B03002 "Hispanic or Latino Origin By Race". American researchers will typically group Hispanics of all races into one category, and then the White or Black category will only count as White or Black those people who are not Hispanic. For this example, I will use `B03002e3` for Nonhispanic White and `B03002e4` for Nonhispanic Black.
+Looking at the formula above, we are interested in the *sum* of a calculated value. Working from the inside out, we need to calculate each tract's share of the region's subgroup population ($a_i/A$), subtract one share from the other, take the abolute value, add them all up by region (state), and multiply by half. The following code performs all of these steps. It does so using the `%>%` ("pipe") operator to send the result of each step to the next step.
 
-QGIS gives us a way to create summary statistics using a tool called "Statistics by categories". Looking at the formula above, we are interested in the *sum* of a calculated value. Unfortunately QGIS does not let us create summary statistics on an arbitrary expression, so first we need to create a field that represents the difference in subpopulation shares that we see to the right of the summation symbol. 
+To see how this builds up to the final value, you can evaluate each part step by step. First select line 2 (the line with the `inner_join()` function) in your code editor in RStudio, except for the `%>%` at the end. Hit `Ctl`+`Enter` to run the code and view the result. Then select line 2 and 3, again not selecting the final `%>%`. Then line 2, 3, and 4, etc., until at the end you run and evaluate the entire expression. After doing so, run the entire code block so that the results are stored in a new data frame, `dfStateD`.
 
-Notice in the formula we need to calculate group share for each region. That is, for each tract, we need to know the share of Whites from a given state who live in that tract (represented in the formula as the fraction *a~i~*/*A*). Thus, we will start by joining the state layer to the tract layer on the field `STATEFP`, which contains the two-digit state FIPS code for each state.
+```r
+# Calculate the index of dissilimarity (D)
+dfStateD = 
+  inner_join(dfTracts, sfStates, by = "state", suffix = c("_county", "_state")) %>%
+    transmute(state, x = abs(white_county / white_state - black_county / black_state)) %>%
+    group_by(state) %>%
+    summarise(x = sum(x)) %>%
+    transmute(state, D = x / 2)
+```
 
-When you perform the join, you can make things easier on yourself by only choosing the fields you are interested in:
+We now need to join this value to the states layer so that we can map it. The `inner_join()` functin will perform matching based on a specified column. In this case we are using the identifer in the `state` column:
 
-![](images/QgisVectorJoinChooseFields.png)\ 
+```r
+sfStates = inner_join(sfStates, dfStateD, by = "state")
+```
 
-Notice that I have also selected the option for a Custom field name prefix, which I have shortened from `state_hispanic_` to just `state_`.
+Finally, filter to only show the continental United States and make a basic map using the tmap package:
 
-Now we need to calculate the share for each region. In the process, we will also move the fraction ½ inside the summation.
+```r
+# For mapping purposes, drop Alaska, Hawai'i, and Puerto Rico
+sfLower48 = filter(sfStates, !state %in% c("02", "15", "72"))
 
-> TIP: When you perform this calculation, QGIS will automatically turn on editing for the layer. This will slow down your grapical display, so you can speed things up by *unchecking* the Render check box in the lower right of the QGIS window.
+# Map Index of Disimilarity
+mapStateD = tm_shape(sfLower48) + 
+  tm_fill(col = "D", palette = "Blues", style = "jenks", title=expression("Index of Disimilarity")) + 
+  tm_layout(title= "Index of Disimilarity Between Black and White Polutions in the US", 
+            title.position = c("center", "top"), inner.margins = c(0.1, 0.1, 0.15, 0.05)) + 
+  tm_borders()
+mapStateD
 
-Select the `tract_hispanic` layer in the Layers Panel. Then open the Field Calculator by clicking the icon ![](http://docs.qgis.org/testing/en/_images/mActionCalculateField.png). The default selection should be to Create a new field. (If it is not, check the box.) Set the output field name to `diff_group_share`. Output field type should be Decimal number (double). The expression will be of the form `0.5 * abs(...)`, where `abs()` is the absolute value function. Looking at the formula, try to figure out what should go inside the parentheses. You need to substitute a *field name* for each variable (*a~i~*, *A*, *b~i~*, *B*) in the expression.
-
-![](images/QgisFieldCalculator.png)\ 
-
-After doing the calculation, you will notice that editing has been turned on for the layer. You can (and should) turn it off by choosing Layer→Toggle Editing from the menu, or toggling off the Edit icon ![](http://docs.qgis.org/testing/en/_images/mActionToggleEditing.png). You will be prompted to save changes, and should choose Save.
-
-Open the Processing Toolbox. This normally appears in a right-hand pane in the QGIS window. If yours is not visible, show it by selecting View→Panels→Toolbox from the menu. Then expand the following path:
-
-* QGIS geoalgorithms
-    * Vector table tools
-        * Statistics by categories
-
-Set the following options:
-
-* Set Input vector layer to `tract_hispanic`
-* Set Field to calculate statistics on to `diff_group_share`
-* Set Field with categories to `STATEFP`
-
-You can leave the save location as a temporary file. This will add the table to the current QGIS workspace after the calculation is complete.
-
-When the processing tool completes, you should have a new attribute layer named `Statistics by category`. Open it to looks at the data. You will notice that you have a `category` field. This is the `STATEFP` column that you chose previously. You have several statistics columns, but the one we are interested in is the `sum` column. This value, which varies from 0 to 1, is the Index of Dissimilarity.
-
-Now that you have calculated the Index of Dissimilarity by state, you can remove the `tract_hispanic` layer from your project.
-
-After joining the `sum` column, QGIS may not recognize it as a quantitative value. In order to convert it to quantitative and to permanently save the value in your database, do the following:
-
-1. Join the `Statistics by category` table to the `state_hispanic` layer. The matching fields are `category` and `STATEFP`.
-2. Open the Field Calculator ![](http://docs.qgis.org/testing/en/_images/mActionCalculateField.png).
-3. Set the Output field name to `Dissimilarity_Black_White` or another appropriate name.
-4. Set the Output field type to "Decimal number (double).
-5. In the list of functions (middle pane), expand the Conversion branch. Select the `to_real` function and read the documentation in the right-hand pane. Double-click (or just type) to add it to the Expressions pane on the left.
-6. Finish the expression by entering the name of the column to convert. When you are done, the Expressions pane should show `to_real("sum")`.
-7. Hit OK.
-
-Once you have created the field (confirm by opening the attribute table), you can remove the join to the `Statistics by category` layer, and you can remove the layer itself from your project.
+# Name and save the map
+save_tmap(tm = mapStateD, filename="XXXXXXXX.png")
+```
 
 # ASSIGNMENT
 
-Create a map showing a choropleth by state of the index of dissimilarity. Superimpose a proportional symbol chart showing another variable of your choice, using the complete ACS State geodatabase from the previous lab exercise. Choose something that you think might be influenced by segregation. For example, if you have calculated Black-White segregation, you might add a proportional symbol chart showing the percentage of Blacks living in poverty. Refer to the metadata to pick an interesting variable.
+Segregation is often studied not by state but by metropolitan area. Tidycensus let's us download that as well, although not the geometries. Researchers are often interested in seeing how segregation correlates with other variables. 
 
-In order to do this you will have to:
+Determine a state-level ACS variable that you would like to compare with segregation. If you wanted to investigate the impacts of Black/White segregation, for example, you could choose median household income, unemployment, or percent poverty for Black households. Add that variable to the list of variables you will download.
 
-1. Using a Graduated symbol, choose a sequential color scheme of 5 or 7 classes.
-3. Add a proportional symbol layer using the ACS State geodatabase.
-4. Use an appropriate projection (such as US National Atlas Equal Area).
-5. Create a layout in the Print Composer.
+Then create a variable `dfMetros`, based on the R code for `sfStates`. Set the `geography = "metropolitan statistical area/micropolitan statistical area"`, and do **not** include the geometries.
 
+Use the `filter` function to eliminate areas that are "Micro Area"s.
 
-
+After downloading the data and calculating the index of dissimilarity by metro, use ggplot to make a basic scatterplot of the two variables.

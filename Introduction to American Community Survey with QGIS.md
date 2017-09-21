@@ -115,9 +115,9 @@ Create a Proportional Symbol Pie Chart Map
 
 Magnitude data, like counts, can be represented using a so-called **proportional symbol map**, where a symbol such as a circle is sized relative to the underlying data values. (Sometimes, usually by non-geographers, this is referred to as a bubble map or bubble chart.) For data that adds up to a total, we may display the result using a pie chart. The pie chart size is controlled by total population, and the pie chart itself shows the components of the total. For example, for housing, you could display a pie chart with wedges showing renter-occupied, owner-occupied, and vacant housing. We will display a pie chart showing wedges based on the count of population of a given race. (For the present exercise, we will ignore the categories "Some other race" and "Two or more races".)
 
-To add the pie charts, open the Layer Properties dialog and click the Diagrams tab in the left-hand pane. Then check the box "Show diagrams for this layer" at the top of the dialog. The Diagram type should default to Pie chart, but if it doesn't select it from the dropdown.
+To add the pie charts, open the Layer Properties dialog and click the Diagrams tab in the left-hand pane. The default setting is "No diagrams", and all the controls will be disabled (grayed out). Set the dropdown to "Pie chart". Now the controls are enabled, and you can set the parameters for the pie chart you want to create.
 
-There are five settings groupings: Attributes, Appearance, Size, Placement, and Options. We will make changes in three of them:
+There are five settings groupings: Attributes, Appearance, Size, Placement, Options, and Legend. We will make changes in three of them:
 
 -   Attributes: Look in the codebook to determine which fields represent which attributes. Select the fields for the following categories, and click the green plus sign so that they appear in the Assigned attributes pane:
     -   Not Hispanic or Latino: White alone
@@ -125,18 +125,19 @@ There are five settings groupings: Attributes, Appearance, Size, Placement, and 
     -   Not Hispanic or Latino: American Indian and Alaska Native alone
     -   Not Hispanic or Latino: Asian alone
     -   Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
-    -   Hispanic or Latino (all races)
+    -   Hispanic or Latino (all races) Additionally, double-click in the Legend column and change the field name to descriptive text that will appear in the legend:
+
+    ![](images/QgisPieChartAttributes.png) 
+
 -   Size: Click the Scaled size radio button
     -   Attribute: Set to `race_ADK5E001`, which is the total population of all races
-    -   Maximum value: Click the Find button to determine the largest value in the selected field, `race_ADK5E001`. **NOTE: As of QGIS 2.14.3, this appears not to work with joined data. Therefore, you may have to exit this dialog and inspect the attribute table yourself to find the largest value. You can do this by clicking on the top of the `race_ADK5E001` column to sort the data in that column.**
-    -   Size: This number represents the Area (default) or Diameter of pie chart. For magnitude data, you always want this to be the Area. The default is 50. Depending on your map, this symbols may be too large or too smale. For this data at this scale, I would suggest experimenting with values between about 15 and 30. (See image below.)
+    -   Maximum value: Click the Find button to determine the largest value in the selected field, `race_ADK5E001`.[2]
+    -   Size: This number represents the Area (default) or Diameter of pie chart. For magnitude data, you always want this to be the Area. The default is 50. Depending on the scale of your map, the symbols may be too large or too small. For this data at this scale, I would suggest experimenting with values between about 15 and 30. (See image below.)
 -   Placement: Set the Placement dropdown to Over Centroid
 
 ![](images/QgisPieChartSize.png) 
 
 Click OK to close the dialog.
-
-Note that the Pie Chart is also what you would use to set a proportional symbol for a single magnitude value, like total population. Just choose a single value in the Attributes panel and choose the same attribute to control the size in the Size panel.
 
 Creating a Print Layout
 =======================
@@ -156,7 +157,7 @@ At this point you may want to adjust the viewable area of your map. Click the `M
 Adding Supporting Elements to the Page
 --------------------------------------
 
-Now add a title using the `Add new label` tool ![](images/QgisAddNewLabel.png).[2] Select the tool and click in the map in the top left of the page. The label will immediately appear with some dummy text. Position it in the upper left corner, and drag the lower right corner to fill an area roughly 3 picas tall and stretching across the top of the page. In the Item Properties tab, change the label text to an appropriate title for your map. Click the Font button, and set the font to Arial Black[3] 24. Set the Alignment to Horizontal=Center and Vertical=Bottom. If the title is long enough to wrap to a second line, make the font size smaller.
+Now add a title using the `Add new label` tool ![](images/QgisAddNewLabel.png).[3] Select the tool and click in the map in the top left of the page. The label will immediately appear with some dummy text. Position it in the upper left corner, and drag the lower right corner to fill an area roughly 3 picas tall and stretching across the top of the page. In the Item Properties tab, change the label text to an appropriate title for your map. Click the Font button, and set the font to Arial Black[4] 24. Set the Alignment to Horizontal=Center and Vertical=Bottom. If the title is long enough to wrap to a second line, make the font size smaller.
 
 Click the `Add new legend` tool ![](images/QgisAddNewLegend.png) and drop a legend in the empty area to the right. The legend will appear with entries for *all* layers in your map. If you're only interested in a particular layer, in the Item Properties tab, expand the Legend items section, select and delete (using the large red minus icon) any layers you don't want to appear in the legend. Below the legend, add sources and any additional information you want, including your name. Depending upon the steps taken for a particular map, you may credit yourself for "Cartography" or for "Analysis and Cartography". For this map, just "Cartography" is appropriate. The data are from the American Community Survey 2014 5-year Average. Date your work. Add any other explanatory text or credits that you want. You may add a scale bar and North arrow, but for thematic maps (as opposed to reference maps) these elements are not strictly necessary, and can just clutter your layout.
 
@@ -172,6 +173,8 @@ Export two PNG images of your map. One with diagrams (pie charts) displayed, and
 
 [1] See <http://www.gdal.org/drv_csv.html> for additional documentation. Note that more recent versions of the OGR library that QGIS uses for data import can determine data type automatically, making this step unnecessary.
 
-[2] Note, QGIS does not distinguish between adding a label and adding a title, the way ArcMap does.
+[2] In some versions of QGIS, such as 2.14.3, this appears not to work with joined data. Therefore, you may have to exit this dialog and inspect the attribute table yourself to find the largest value. You can do this by clicking on the top of the `race_ADK5E001` column to sort the data in that column. This was fixed sometime during QGIS 2.14.x or 2.16.x.
 
-[3] It is better to use a font constructed as bold ("Black", "Heavy") or italic ("Oblique") than to take a base typeface like Arial and apply bold or italic to it.
+[3] Note, QGIS does not distinguish between adding a label and adding a title, the way ArcMap does.
+
+[4] It is better to use a font constructed as bold ("Black", "Heavy") or italic ("Oblique") than to take a base typeface like Arial and apply bold or italic to it.
