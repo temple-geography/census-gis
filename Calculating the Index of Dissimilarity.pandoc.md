@@ -1,5 +1,7 @@
-% Calculating the Index of Dissimilarity
-% Prof. Hachadoorian
+---
+title: Calculating the Index of Dissimilarity
+author: Prof. Hachadoorian
+---
 
 # Overview
 
