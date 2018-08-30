@@ -85,7 +85,7 @@ dfStateD =
     transmute(state, D = x / 2)
 ```
 
-We now need to join this value to the states layer so that we can map it. The `inner_join()` functin will perform matching based on a specified column. In this case we are using the identifer in the `state` column:
+We now need to join this value to the states layer so that we can map it. The `inner_join()` function will perform matching based on a specified column. In this case we are using the identifer in the `state` column:
 
 ```r
 sfStates = inner_join(sfStates, dfStateD, by = "state")
