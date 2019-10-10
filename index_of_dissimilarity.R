@@ -4,6 +4,10 @@ library(tidyverse)
 library(tidycensus)
 library(sf)
 
+## Optionally, load API key from source file so that you don't have to include
+## key in your code
+# source("census_api_key.R")
+
 ## If using a public computer, run the following line with your API key
 # census_api_key("REPLACE_WITH_YOUR_CENSUS_API_KEY") 
 
@@ -12,13 +16,13 @@ race_vars = c("B03002_003", "B03002_004", "B03002_006", "B03002_012")
 
 # Download state and tract-level data, rename columns, drop margins of error
 sfStates = get_acs(
-  geography = "state", variables = race_vars, endyear = 2015, 
+  geography = "state", variables = race_vars, year = 2017, 
   output = "wide", geometry = TRUE
 )
 sfStates = select(sfStates, state = GEOID, name = NAME, white = B03002_003E, 
        black = B03002_004E, asian = B03002_006E, hispanic = B03002_012E)
 dfTracts = get_acs(
-  geography = "tract", variables = race_vars, endyear = 2015, 
+  geography = "tract", variables = race_vars, year = 2017, 
   output = "wide", state = sfStates$state
 )
 dfTracts = transmute(

@@ -43,13 +43,13 @@ We will be mapping $D$ by state, so we set `geometry = TRUE` for the state downl
 
 ```r
 sfStates = get_acs(
-  geography = "state", variables = race_vars, endyear = 2015, 
+  geography = "state", variables = race_vars, year = 2017, 
   output = "wide", geometry = TRUE
 )
 sfStates = select(sfStates, state = GEOID, name = NAME, white = B03002_003E, 
        black = B03002_004E, asian = B03002_006E, hispanic = B03002_012E)
 dfTracts = get_acs(
-  geography = "tract", variables = race_vars, endyear = 2015, 
+  geography = "tract", variables = race_vars, year = 2017, 
   output = "wide", state = sfStates$state
 )
 dfTracts = transmute(
@@ -109,6 +109,7 @@ mapStateD
 save_tmap(tm = mapStateD, filename="XXXXXXXX.png")
 ```
 
+<!--
 # ASSIGNMENT
 
 Segregation is often studied not by state but by metropolitan area. Tidycensus let's us download that as well, although not the geometries. Researchers are often interested in seeing how segregation correlates with other variables. 
@@ -120,3 +121,4 @@ Then create a variable `dfMetros`, based on the R code for `sfStates`. Set the `
 Use the `filter` function to eliminate areas that are "Micro Area"s.
 
 After downloading the data and calculating the index of dissimilarity by metro, use ggplot to make a basic scatterplot of the two variables.
+-->
