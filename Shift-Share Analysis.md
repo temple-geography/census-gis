@@ -110,7 +110,7 @@ subsequent web pages:
     2.  2001 – 2007, peak to peak growth from the tech bubble to housing
         bubble
     3.  2010 – 2013, the Great Recession recovery period
-    4.  1990 – 2015, the entire period we have data for
+    4.  1990 – 2018, the entire period we have data for
     
     Enter the start year in cell C2 and the end year in cell D2.
 
