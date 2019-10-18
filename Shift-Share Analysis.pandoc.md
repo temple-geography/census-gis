@@ -8,7 +8,7 @@ A shift-share analysis is used to examine employment growth or decline in a regi
 
 # Data
 
-First, download the file [Shift-Share Template.xls](https://github.com/temple-geography/census-gis/blob/master/Shift-Share%20Template.ods). This file contains national employment data for economic sectors from 1990 to 2015. You will need to download analogous data for a metropolitan area in order to conduct a shift-share analysis for the area. The professor will demonstrate using data from the Philadelphia-Camden-Wilmington MSA. Therefore, you may choose any MSA *except* Philadelphia.
+First, download the file [Shift-Share Template.ods](https://github.com/temple-geography/census-gis/blob/master/Shift-Share%20Template.ods). This file contains national employment data for economic sectors from 1990 to 2018. You will need to download analogous data for a metropolitan area in order to conduct a shift-share analysis for the area. The professor will demonstrate using data from the Philadelphia-Camden-Wilmington MSA. Therefore, you may choose any MSA *except* Philadelphia.
 
 Begin on the BLS Databases, Tables & Calculators by Subject page at [http://www.bls.gov/data/](http://www.bls.gov/data/). Scroll down to the Employment section. The second entry should be "Employment, Hours, and Earnings - State and Metro Area (Current Employment Statistics - CES)". Click the yellow button for "Multi-Screen Data Search".^[Note the "One-Screen Data Search *may* be easier to use, but (a) requires Java to be installed and enabled on your computer, and (b) provides less information during the data selection process, so a little more obtuse for new users.] Then follow along on the subsequent web pages:
 
@@ -45,7 +45,7 @@ Begin on the BLS Databases, Tables & Calculators by Subject page at [http://www.
     a. 1991 -- 2001, trough to peak growth during the Clinton years
     b. 2001 -- 2007, peak to peak growth from the tech bubble to housing bubble
     c. 2010 -- 2013, the Great Recession recovery period
-    d. 1990 -- 2015, the entire period we have data for
+    d. 1990 -- 2018, the entire period we have data for
 
     Enter the start year in cell C2 and the end year in cell D2.
 

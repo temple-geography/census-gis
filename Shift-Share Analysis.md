@@ -19,9 +19,9 @@ industrial drivers are.
 # Data
 
 First, download the file [Shift-Share
-Template.xls](https://github.com/temple-geography/census-gis/blob/master/Shift-Share%20Template.ods).
+Template.ods](https://github.com/temple-geography/census-gis/blob/master/Shift-Share%20Template.ods).
 This file contains national employment data for economic sectors from
-1990 to 2015. You will need to download analogous data for a
+1990 to 2018. You will need to download analogous data for a
 metropolitan area in order to conduct a shift-share analysis for the
 area. The professor will demonstrate using data from the
 Philadelphia-Camden-Wilmington MSA. Therefore, you may choose any MSA

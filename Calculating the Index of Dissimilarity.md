@@ -144,8 +144,8 @@ sfLower48 = filter(sfStates, !state %in% c("02", "15", "72"))
 
 # Map Index of Disimilarity
 mapStateD = tm_shape(sfLower48) + 
-  tm_fill(col = "D", palette = "Blues", style = "jenks", title=expression("Index of Disimilarity")) + 
-  tm_layout(title= "Index of Disimilarity Between Black and White Polutions in the US", 
+  tm_fill(col = "D", palette = "Blues", style = "jenks", title = expression("Index of Dissimilarity")) + 
+  tm_layout(title = "Index of Dissimilarity Between Black and White Population in the US", 
             title.position = c("center", "top"), inner.margins = c(0.1, 0.1, 0.15, 0.05)) + 
   tm_borders()
 mapStateD
