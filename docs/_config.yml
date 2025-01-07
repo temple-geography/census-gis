@@ -1,0 +1,33 @@
+title: Census Analysis with GIS
+description: Prof. Hachadoorian | Spring 2025
+# theme: jekyll-theme-cayman
+# theme: jekyll-theme-slate
+# theme: jekyll-theme-merlot
+# theme: jekyll-theme-dinky
+remote_theme: chrisrhymes/bulma-clean-theme@v0.14.0
+
+titles_from_headings:
+  enabled: false
+
+defaults:
+  
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      title: Census Analysis with GIS
+      subtitle: Spring 2025
+      layout: page
+      show_sidebar: false
+      menubar: course_menu
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      author: "Lee Hachadoorian"
+      layout: post
+      image: https://via.placeholder.com/1200x800
+      show_sidebar: true
+

@@ -1,0 +1,60 @@
+- label: Syllabus
+  items:
+    - name: Overview
+      link: /
+    - name: Schedule in Detail
+      link: /schedule_in_detail
+    - name: Assignments & Grading
+      link: /assignments_and_grading
+    - name: General Policies
+      link: /general_policies
+- label: Exercises
+  items:
+    - name: "Exercise 1: SQL Select Statements"
+      link: /exercises/ex1_sql_select
+    - name: "Exercise 2: Spatial Reference Systems and Measurement"
+      link: /exercises/ex2_spatial_reference_systems
+    - name: "Exercise 3: SQL Aggregate Query"
+      link: /exercises/ex3_sql_aggregate_query
+    - name: "Exercise 4: SQL Joins"
+      link: /exercises/ex4_sql_joins
+    - name: "Exercise 5: Spatial Joins"
+      link: /exercises/ex5_spatial_joins
+    - name: "Exercise 6: SQL Inserts"
+      link: /exercises/ex6_sql_inserts
+    - name: "Exercise 7: Spatial Relationships"
+      link: /exercises/ex7_spatial_relationships
+    - name: "Exercise 8: Proximity Analysis"
+      link: /exercises/ex8_proximity_analysis
+#- label: Software Installation and Other Instructions
+#  items:
+#    - name: Creating a PostGIS Server in Docker
+#      link: /creating_a_postgis_server_in_docker
+#    - name: Locally Hosting the Open Source Shakespeare Database
+#      link: /locally_hosting_the_open_source_shakespeare_database
+#    - name: Upload the Natural Earth Database
+#      link: /upload_natural_earth_database
+#    - name: ERDs with Lucidchart
+#      link: /erds_with_lucidchart
+
+################################
+# Sample format
+################################
+#- label: Menu Label
+#  items:
+#    - name: Example item
+#      link: /example-item/
+#- label: Second Menu Label
+#  items:
+#    - name: Parent Item
+#      link: /parent-item/
+#      items:
+#        - name: Sublink 
+#          link: /sublink/
+#        - name: Sublink 2
+#          link: /sublink2/
+#- label: Third Menu Label
+#  items:
+#    - name: Another example item
+#      link: /another-example-item/
+
