@@ -36,6 +36,10 @@ There are no course prerequisites; however, a working knowledge of Windows and b
     * Off campus access: [https://methods-sagepub-com.libproxy.temple.edu/book/mono/exploring-the-us-census](https://methods-sagepub-com.libproxy.temple.edu/book/mono/exploring-the-us-census)
 * This book is also on order with the campus store and available through Amazon. If you can afford it, I recommend that you purchase a physical copy and keep it as a reference for your future academic and professional careers.
 
+## Software
+
+This course will make heavy use of free and open source software. All software will be installed on lab computers. Since the software is free, students may also install all software on their own computers or laptops. If you have a laptop that you can bring to class, you may prefer to work on your own laptop, so that you don’t have to shuffle data between lab computers and flash drives. Also, if you prefer working on Mac, the software we use for this course is cross-platform and can be installed on Mac.
+
 ## Schedule in Brief
 
 * Week 1
