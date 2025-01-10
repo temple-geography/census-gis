@@ -32,8 +32,8 @@ There are no course prerequisites; however, a working knowledge of Windows and b
 [Exploring the U.S. Census: Your Guide to America’s Data](https://us.sagepub.com/en-us/nam/exploring-the-us-census/book266236) by Frank Donnelly (SAGE, 2019)
 
 * The textbook is available for free as an electronic resource through the library:
-    * On campus access: [https://methods.sagepub.com/book/mono/exploring-the-us-census](https://methods.sagepub.com/book/mono/exploring-the-us-census)
-    * Off campus access: [https://methods-sagepub-com.libproxy.temple.edu/book/mono/exploring-the-us-census](https://methods-sagepub-com.libproxy.temple.edu/book/mono/exploring-the-us-census)
+    * On campus access: [https://methods.sagepub.com/book/mono/exploring-the-us-census/toc](https://methods.sagepub.com/book/mono/exploring-the-us-census/toc)
+    * Off campus access: [https://methods-sagepub-com.libproxy.temple.edu/book/mono/exploring-the-us-census/toc](https://methods-sagepub-com.libproxy.temple.edu/book/mono/exploring-the-us-census/toc)
 * This book is also on order with the campus store and available through Amazon. If you can afford it, I recommend that you purchase a physical copy and keep it as a reference for your future academic and professional careers.
 
 ## Software
