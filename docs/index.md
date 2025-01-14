@@ -29,62 +29,52 @@ There are no course prerequisites; however, a working knowledge of Windows and b
 
 ## Text
 
-[Exploring the U.S. Census: Your Guide to America’s Data](https://us.sagepub.com/en-us/nam/exploring-the-us-census/book266236) by Frank Donnelly (SAGE, 2019)
-
-* The textbook is available for free as an electronic resource through the library:
+* [Exploring the U.S. Census: Your Guide to America’s Data](https://us.sagepub.com/en-us/nam/exploring-the-us-census/book266236) by Frank Donnelly (SAGE, 2019) - This book is on order with the campus store, and also available for free as an electronic resource through the library:
     * On campus access: [https://methods.sagepub.com/book/mono/exploring-the-us-census/toc](https://methods.sagepub.com/book/mono/exploring-the-us-census/toc)
     * Off campus access: [https://methods-sagepub-com.libproxy.temple.edu/book/mono/exploring-the-us-census/toc](https://methods-sagepub-com.libproxy.temple.edu/book/mono/exploring-the-us-census/toc)
-* This book is also on order with the campus store and available through Amazon. If you can afford it, I recommend that you purchase a physical copy and keep it as a reference for your future academic and professional careers.
+* [Analyzing US Census Data: Methods, Maps, and Models in R](https://walker-data.com/census-r/) by Kyle Walker (CRC Press, 2023) - Although a print version is available, it is not on order with the campus store. You should feel free to use the free online version.
 
 ## Software
 
 This course will make heavy use of free and open source software. All software will be installed on lab computers. Since the software is free, students may also install all software on their own computers or laptops. If you have a laptop that you can bring to class, you may prefer to work on your own laptop, so that you don’t have to shuffle data between lab computers and flash drives. Also, if you prefer working on Mac, the software we use for this course is cross-platform and can be installed on Mac.
 
+* [LibreOffice Calc](https://www.libreoffice.org/download/download-libreoffice/)
+    * Alternatively, you can use Google Sheets
+    * Alternatively, you can use Excel; Temple students have free access to Microsoft 365: <https://education.temple.edu/help/microsoft>
+* [QGIS](https://www.qgis.org/download/)
+* [R](https://cran.r-project.org/) and [RStudio](https://posit.co/download/rstudio-desktop/) - Note that you must install *both* R (the statistical software) and RStudio (the IDE); RStudio will not run without R
+
 ## Schedule in Brief
 
 * Week 1
-    * Topic
-    * Assignment Due
+    * Introduction
 * Week 2
-    * Topic
-    * Assignment Due
+    * Census Geography
 * Week 3
-    * Topic
-    * Assignment Due
+    * Census Subjects
 * Week 4
-    * Topic
-    * Assignment Due
+    * Mapping & GIS
 * Week 5
-    * Topic
-    * Assignment Due
+    * Decennial Census
 * Week 6
-    * Topic
-    * Assignment Due
+    * American Community Survey
 * Week 7
-    * Topic
-    * Assignment Due
+    * Business Data Sets
 * **SPRING BREAK**
 * Week 8
-    * Topic
-    * Assignment Due
+    * Special Topics 1
 * Week 9
-    * Topic
-    * Assignment Due
+    * Special Topics 2
 * Week 10
-    * Topic
-    * Assignment Due
+    * Special Topics 3
 * Week 11
-    * Topic
-    * Assignment Due
+    * Student-Led Tutorials and Project Time
 * Week 12
-    * Topic
-    * Assignment Due
+    * Student-Led Tutorials and Project Time
 * Week 13
-    * Topic
-    * Assignment Due
+    * Student-Led Tutorials and Project Time
 * Week 14
-    * Topic
-    * Assignment Due
+    * Term Project: Poster Presentation
 * Finals
     * Term Project: Milestone 5 (Final Report) Due
 
@@ -102,8 +92,8 @@ Lab Exercises (N)
 : N points each for labs 1 and 2.
 : N points each for labs 3 through 7.
 
-Student-Led Tutorial (graduate only) (to be edited)
-: 70-100 points. The tutorial is a skills workshop developed and presented by teams of 3-4 students based on topics discussed in class. The tutorial is awarded up to 30 points based on written materials (a workbook) and presentation..
+Student-Led Tutorial (graduate only)
+: 70-100 points. The tutorial is a skills workshop developed and presented by teams of 3-4 students based on topics discussed in class. The tutorial is awarded up to 30 points based on written materials (a workbook) and presentation.
 
 Term Project (to be edited)
 : 50 (graduate) or 60 (undergraduate) base score
