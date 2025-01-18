@@ -10,22 +10,28 @@
       link: /general_policies
 - label: Exercises
   items:
-    - name: "Exercise 1: SQL Select Statements"
-      link: /exercises/ex1_sql_select
-    - name: "Exercise 2: Spatial Reference Systems and Measurement"
-      link: /exercises/ex2_spatial_reference_systems
-    - name: "Exercise 3: SQL Aggregate Query"
-      link: /exercises/ex3_sql_aggregate_query
-    - name: "Exercise 4: SQL Joins"
-      link: /exercises/ex4_sql_joins
-    - name: "Exercise 5: Spatial Joins"
-      link: /exercises/ex5_spatial_joins
-    - name: "Exercise 6: SQL Inserts"
-      link: /exercises/ex6_sql_inserts
-    - name: "Exercise 7: Spatial Relationships"
-      link: /exercises/ex7_spatial_relationships
-    - name: "Exercise 8: Proximity Analysis"
-      link: /exercises/ex8_proximity_analysis
+    - name: "Exercise 1: Exploring Census Data with Tidycensus"
+      link: /exercises/auscd_3-2_exploring_census_data_with_tidyverse_tools.md
+    - name: "Exercise 2a: Generational Categories"
+      link: /exercises/eusc_4-1_generational_categories
+    - name: "Exercise 2b: Estimating Seasonal Populations"
+      link: /exercises/eusc_4-2_estimating seasonal populations
+    - name: "Exercise 3a: QGIS Exercise"
+      link: /exercises/eusc_10-4_qgis_exercise
+    - name: "Exercise 3b: Map-Making with Tmap"
+      link: /exercises/auscd_6-3_map-making_with_tmap
+    - name: "Exercise 4: Relating Group Quarters and Rural Categories"
+      link: /exercises/eusc_5-1_relating_group_quarters_and_rural_categories_with_calc
+    - name: "Exercise 5: Aggregating Tract-Level Estimates to Neighborhoods"
+      link: /exercises/eusc_6-1_aggregating_tract-level_estimates_to_neighborhoods
+    - name: "Exercise 6: Business Datasets"
+      link: /exercises/business_datasets
+    - name: "Exercise 7: Special Topics 1"
+      link: /exercises/special_topics_1
+    - name: "Exercise 8: Special Topics 2"
+      link: /exercises/special_topics_2
+    - name: "Exercise 9: Special Topics 3"
+      link: /exercises/special_topics_3
 #- label: Software Installation and Other Instructions
 #  items:
 #    - name: Creating a PostGIS Server in Docker

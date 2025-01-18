@@ -52,17 +52,24 @@ This course will make heavy use of free and open source software. All software w
     * Census Geography
 * Week 3
     * Census Subjects
+    * Exercise 1 Due
 * Week 4
     * Mapping & GIS
+    * Exercise 2a & 2b Due
 * Week 5
     * Decennial Census
+    * Exercise 3b Due
 * Week 6
     * American Community Survey
+    * Exercise 3a Due
+    * Exercise 4 Due
 * Week 7
     * Business Data Sets
+    * Exercise 5 Due
 * **SPRING BREAK**
 * Week 8
     * Special Topics 1
+    * Exercise 6 Due
 * Week 9
     * Special Topics 2
 * Week 10
@@ -76,7 +83,7 @@ This course will make heavy use of free and open source software. All software w
 * Week 14
     * Term Project: Poster Presentation
 * Finals
-    * Term Project: Milestone 5 (Final Report) Due
+    * Term Project: Final Report Due
 
 ## Assignments in Brief
 
@@ -87,20 +94,23 @@ The tracks and points associated with each assignment in the track are as follow
 Attendance
 : 0-100 points. Your attendance score is a straight percentage of the class sessions you are present for.
 
-Lab Exercises (N)
-: N base score.
-: N points each for labs 1 and 2.
-: N points each for labs 3 through 7.
+Lab Exercises (11)
+: 100 points total.
+: TBD base score.
+: 5 points each (35 total) for Exercises 1, 2a & 2b, 3b, 4, 5, 6.
+: 10 points for Exercise 3a.
+: 5-10 points each (TBD) for Exercises 7-9 (Special Topics).
 
 Student-Led Tutorial (graduate only)
 : 70-100 points. The tutorial is a skills workshop developed and presented by teams of 3-4 students based on topics discussed in class. The tutorial is awarded up to 30 points based on written materials (a workbook) and presentation.
 
-Term Project (to be edited)
-: 50 (graduate) or 60 (undergraduate) base score
-: 5 points Milestone 1: Topic Proposal & Data
-: 10 points Milestone 2: Project Proposal
-: 10 points Milestone 3 (graduate only): Literature Review
-: 10 points Milestone 4: Progress Report
-: 15 points Milestone 5: Final Report
+Term Project
+: 40 (graduate) or 50 (undergraduate) base score
+: 5 points Milestone 1: Project Proposal
+: 10 points Milestone 2a: Methods
+: 10 points Milestone 2b (graduate only): Literature Review
+: 5 points Milestone 3: Draft Report
+: 10 points Milestone 4: Poster Presentation
+: 20 points Milestone 5: Final Report
 
 
