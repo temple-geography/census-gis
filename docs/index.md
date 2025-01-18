@@ -1,6 +1,6 @@
 Meeting:
 
-* Thursday 5:30-8pm, Mazur 19
+* Thursday 5:30-8pm, Mazur 22
 
 Instructor Info:
 
