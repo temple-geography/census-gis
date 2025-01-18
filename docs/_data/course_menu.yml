@@ -11,7 +11,7 @@
 - label: Exercises
   items:
     - name: "Exercise 1: Exploring Census Data with Tidycensus"
-      link: /exercises/auscd_3-2_exploring_census_data_with_tidyverse_tools.md
+      link: /exercises/auscd_3-2_exploring_census_data_with_tidyverse_tools
     - name: "Exercise 2a: Generational Categories"
       link: /exercises/eusc_4-1_generational_categories
     - name: "Exercise 2b: Estimating Seasonal Populations"
