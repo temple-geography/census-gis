@@ -80,6 +80,7 @@ This course will make heavy use of free and open source software. All software w
     * Student-Led Tutorials and Project Time
 * Week 13
     * Student-Led Tutorials and Project Time
+    * Posters Reviewed in Class
 * Week 14
     * Term Project: Poster Presentation
 * Finals

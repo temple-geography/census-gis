@@ -79,7 +79,8 @@
 * Week 12 (Apr 7 - 11)
     * Tues — Student-Led Tutorials & Project Time
 * Week 13 (Apr 14 - 18)
-    * Tues — Student-Led Tutorials & Project Time 
+    * Tues — Student-Led Tutorials & Project Time
+        * **Due Date:** Posters Reviewed in Class
 * Week 14 (Apr 21 - 25)
     * Tues — Department Poster Session/PSM Capstones
         * **Due Date:** Term Project Poster Presentation
