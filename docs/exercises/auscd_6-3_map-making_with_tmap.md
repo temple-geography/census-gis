@@ -1,6 +1,6 @@
 # Exercise: Map-Making with Tmap
 
-:hammer_and_wrench: **UNDER CONSTRUCTION** :hammer_and_wrench:
+🛠️ **UNDER CONSTRUCTION** 🛠️
 
 You will create maps of racial demographics for the largest county in your state using the `tmap` package in R. As discussed in class, treat Hispanic/Latino of any race as a single group, and for all other races uses non-Hispanic only.
 
