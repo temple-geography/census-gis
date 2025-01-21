@@ -21,7 +21,7 @@
     - name: "Exercise 3b: Map-Making with Tmap"
       link: /exercises/auscd_6-3_map-making_with_tmap
     - name: "Exercise 4: Relating Group Quarters and Rural Categories"
-      link: /exercises/eusc_5-1_relating_group_quarters_and_rural_categories_with_calc
+      link: /exercises/eusc_5-1_relating_group_quarters_and_rural_categories
     - name: "Exercise 5: Aggregating Tract-Level Estimates to Neighborhoods"
       link: /exercises/eusc_6-1_aggregating_tract-level_estimates_to_neighborhoods
     - name: "Exercise 6: Business Datasets"
