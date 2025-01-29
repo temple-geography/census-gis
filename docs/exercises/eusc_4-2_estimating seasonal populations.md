@@ -21,11 +21,11 @@ Write a paragraph discussing the implications of your analysis. How does this im
 
 5-6. Find the Average Family Size and Average Housing Size of your study area. You will also need total population, so check to show "Demographic" as well as "Social" subjects.
 
-\7. Total population (cell B1), AHS (cell B6), and AFS (cell C6) come from the MCDC profile report. The number of seasonal units and the seasonal MOE comes from Table B25004 (Vacancy Status), which you downloaded from data.census.gov.
+7\. Total population (cell B1), AHS (cell B6), and AFS (cell C6) come from the MCDC profile report. The number of seasonal units and the seasonal MOE comes from Table B25004 (Vacancy Status), which you downloaded from data.census.gov.
 
-\10. The same notes regarding the import of Tables B25002 and B25004 apply to B25041.
+10\. The same notes regarding the import of Tables B25002 and B25004 apply to B25041.
 
-\12. The exercise doesn't make clear where the 0.316 (31.6%) comes from. You need to calculate this by dividing the number of seasonal housing units (B25004_006E) by the total number of housing units (B25002_001E). Additionally, rather than type this value into each of 5 different cells, I recommend you put it in cell E1 and then reference this cell in your formula.
+12\. The exercise doesn't make clear where the 0.316 (31.6%) comes from. You need to calculate this by dividing the number of seasonal housing units (B25004_006E) by the total number of housing units (B25002_001E). Additionally, rather than type this value into each of 5 different cells, I recommend you put it in cell E1 and then reference this cell in your formula.
 
 ## Deliverables
 
