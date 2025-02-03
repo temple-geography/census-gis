@@ -175,6 +175,8 @@ tm_shape(philly_race) +
              position = c("RIGHT", "BOTTOM"))
 ```
 
+![](images/chorpleth_with_reference_elements.png)
+
 The `position` parameter allows us to control the placement of these elements. Since Philadelphia's shape leaves empty space in the Northwest and Southeast of the city, these are suitable places for additional map elements. If you are mapping a different geography, you should make use of these dead spaces in your map.
 
 Notice that we have capitalized the position parameters passed to `tm_credits()`. We used `position = c("RIGHT", "BOTTOM")`. Capitalizing these parameters positions the element tighter to the margins of the map. This allows us to place the scale bar and credits both in the lower right, as the credit line is closer to the bottom than the scale bar.
