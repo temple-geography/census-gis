@@ -13,3 +13,5 @@ Based on [Analyzing US Census Data 6.3 Map-making with tmap](https://walker-data
 Begin by using `get_decennial()` (2020) or `get_acs()` (2023) to identify the largest county (by population) in your state. Include this code in your script.
 
 Determine what races are significantly present in your county by 
+
+We are going to use an easier way of adding a basemap. Section 6.3.2 "Adding reference elements to a map" demonstrates using the Mapbox API to fetch basemap tiles, but this requires having a Mapbox API key, and also takes an extra step to fetch the tiles. Tmap 4.0 has a function, `tm_basemap()`, which allows you to add a basemap without needing an API key.

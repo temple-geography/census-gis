@@ -36,7 +36,7 @@
             [EUSC 10.1](https://methods.sagepub.com/book/mono/exploring-the-us-census/chpt/10-mapping-gis) "Introduction"; 10.3 "Introduction to GIS"
         * Lab:
             * [Exercise 3a: QGIS Exercise](exercises/eusc_10-4_qgis_exercise) — **NOTE: You will have 1-1/2 weeks to complete this exercise**
-            * [Exercise 3b: Map-Making with Tmap](exercises/auscd_6-3_map-making_with_tmap)
+            * [Exercise 3b: Map-Making with Tmap v4](exercises/map-making_with_tmap4)
      * Wed **Due Date:** Exercise 2a & 2b
 * Week 5 (Feb 10-14)
     * Tues — Decennial Census

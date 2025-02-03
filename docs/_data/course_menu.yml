@@ -18,8 +18,8 @@
       link: /exercises/eusc_4-2_estimating seasonal populations
     - name: "Exercise 3a: QGIS Exercise"
       link: /exercises/eusc_10-4_qgis_exercise
-    - name: "Exercise 3b: Map-Making with Tmap"
-      link: /exercises/auscd_6-3_map-making_with_tmap
+    - name: "Exercise 3b: Map-Making with Tmap v4"
+      link: /exercises/map-making_with_tmap4
     - name: "Exercise 4: Relating Group Quarters and Rural Categories"
       link: /exercises/eusc_5-1_relating_group_quarters_and_rural_categories
     - name: "Exercise 5: Aggregating Tract-Level Estimates to Neighborhoods"
