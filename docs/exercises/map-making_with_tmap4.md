@@ -68,7 +68,7 @@ So far, not very interesting. Let's start with a basic choropleth map. A choropl
 
 **One important thing to keep in mind about choropleths is that they should (almost) never be used to map raw count data.** As the area of a polygon gets larger, the counts usually go up as well. It may be true that in the United States there are some small area states (like New Jersey) that are very urban, and some large area states (like Wyoming) that are very rural, but on average large area states will have larger populations than small area states. If you make a chorpleth map of a raw count, you will tend to just make a map that shows more people living in larger areas.
 
-We will address this by converting the raw counts to percentages. We create our main data frame, `philly_race`, while leaving the original data untouched. We use backticks (`\`...\``) to create column names that have spaces and special characters (like `%`).
+We will address this by converting the raw counts to percentages. We create our main data frame, `philly_race`, while leaving the original data untouched. We use backticks (`` `...` ``) to create column names that have spaces and special characters (like `%`).
 
 ```r
 philly_race = philly_race %>%
