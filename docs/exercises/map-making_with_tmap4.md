@@ -199,7 +199,14 @@ Many geographers use the color palettes created by Penn State cartographer Cynth
 cols4all::c4a_gui()
 ```
 
-Note that **cols4all** is a dependency of **tmap**. As such, it was installed when you installed **tmap**. However, it has its own dependencies which may not have been installed. R will return a message indicating what additional packages need to be installed, if any.
+Note that **cols4all** is a dependency of **tmap**. As such, it was installed when you installed **tmap**. However, it has its own dependencies which may not have been installed. If you did not install **cols4all** explicitly, you will probably get the following message:
+
+```style="color:red;"
+The packages colorblindcheck, plotly are required. Please install them with:
+install.packages(c("colorblindcheck", "plotly"))
+```
+
+If you do, just copy-paste to install the missing packages.
 
 I will demonstrate both ColorBrewer and **cols4all** in class.
 
@@ -247,13 +254,50 @@ tm_shape(philly_race) +
 
 ## Dot-density Maps
 
-COMING SOON
+A dot map shows point locations of objects or events. Dot-density maps show count data that is collected over areas by filling those areas (polygons) with dots representing the counted items. It is frequently used for population data or event data where the exact location of the event is not known. We may know that a Census tract has 1,000 people living in it, but we don't know exactly where they live. Dot-density maps are dots the *suggest* point locations, but the points don't represent real locations.
+
+One benefit of dot-density maps is that if the data can be categorized, those categories can be represented by a visual variable such as color. Notice that with the choropleth maps we created, each map shows one race at a time. It is hard to find or understand which neighborhoods have a mix of races, even when we created facet maps. Using a dot-density map allows us to show each category (race) using a different color, which makes it easier to identify racially mixed neighborhoods.
+
+Fortunately, **tidycensus** has the `as_dot_density()` function, which creates a point layer from a polygon layer, which we can then map in **tmap**. We usually don't want one dot per person or household, as too many dots will just merge into a solid color. You can control the dot ratio (number of persons or items that a dot represents) and dot size. There is no "right" choice here. I will show you some choices that I think make sense for the Philadelphia map. You should play with different choices. A good rule of thumb is to choose values such that the dots in the densest polygons are beginning to coalesce.
+
+Use the **tidycensus** `as_dot_density()` function to create the dot-density object.
+
+```r
+philly_race_dots = zz_philly_race %>%
+  select(White, Black, Asian, Hispanic) %>%
+  pivot_longer(
+    cols = -geometry,
+    names_to = "race",
+    values_to = "population"
+  ) %>%
+  as_dot_density(
+    value = "population",
+    values_per_dot = 100,
+    group = "race"
+  )
+```
+
+Create the dot-density map.
+
+```r
+tm_shape(philly_race) + # Use previous dataset for background tracts
+  tm_polygons(fill = "white", col = "grey") +
+  tm_shape(philly_race_dots) +
+  tm_dots(fill = "race", 
+          fill.scale = tm_scale_categorical(values = "brewer.set1"),
+          fill.legend = tm_legend("1 dot = 100 people", size = 0.5,
+                                  position = c("right", "bottom")),
+          size = 0.01) + 
+  tm_title_in("Race/ethnicity,\n2020 US Census")
+```
+
+![](images/dot_density_map.png)
 
 # ASSIGNMENT
 
 You will create maps of racial demographics for the largest county in your state using the `tmap` package in R. As discussed in class, treat Hispanic/Latino of any race as a single group, and for all other races uses non-Hispanic only.
 
-Based on [Analyzing US Census Data 6.3 Map-making with tmap](https://walker-data.com/census-r/mapping-census-data-with-r.html#map-making-with-tmap), you will make the following maps:
+Based on the tutorial, you will make the following maps:
 
 1. A choropleth map of a non-White racial/ethnic group present in your county.
 2. A faceted choropleth of all significant race/ethnicity groups in your county.
@@ -261,6 +305,13 @@ Based on [Analyzing US Census Data 6.3 Map-making with tmap](https://walker-data
 
 Begin by using `get_decennial()` (2020) or `get_acs()` (2023) to identify the largest county (by population) in your state. Include this code in your script.
 
-Determine what races are significantly present in your county by 
+Determine what races are significantly present in your county by examining the race data that you download. Some states or counties will have significant populations of groups not present in other states. Don't map a group that doesn't comprise at least 30% of a Census tract. You can use the `arrange()` function, or the data viewer in RStudio, to examine the tract demographics after calculating the race variables.
 
-We are going to use an easier way of adding a basemap. Section 6.3.2 "Adding reference elements to a map" demonstrates using the Mapbox API to fetch basemap tiles, but this requires having a Mapbox API key, and also takes an extra step to fetch the tiles. Tmap 4.0 has a function, `tm_basemap()`, which allows you to add a basemap without needing an API key.
+Small to nonexistent race groups should be excluded from both the choropleth facet maps and the dot density map. Note that including a racial group with insufficient numbers when you run the `as_dot_density()` function will generate an error.
+
+Make sure to use `tm_credits()` to add your maps, and to credit yourself as the cartographer. That is, your name should appear on all three maps.
+
+## Deliverables
+
+1. An R script that generates these three maps.
+2. The three maps exported as PNG or JPEG images. You can use the Export button in the plot pane of RStudio to export the map.
