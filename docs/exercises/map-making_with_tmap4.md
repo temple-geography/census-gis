@@ -309,7 +309,7 @@ Determine what races are significantly present in your county by examining the r
 
 Small to nonexistent race groups should be excluded from both the choropleth facet maps and the dot density map. Note that including a racial group with insufficient numbers when you run the `as_dot_density()` function will generate an error.
 
-Make sure to use `tm_credits()` to add your maps, and to credit yourself as the cartographer. That is, your name should appear on all three maps.
+Make sure to use `tm_credits()` to credit yourself as the cartographer. That is, your name should appear on all three maps.
 
 ## Deliverables
 
