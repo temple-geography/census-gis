@@ -1,5 +1,13 @@
 # Exercise: Map-Making with Tmap v4
 
+⚠️ **WARNING** ⚠️
+
+As of February 4, 2025, Census FTP servers are partially shutdown. The `get_decennial()` call demonstrated below will not work. Note that `get_decennial()` is still working with `geometry = FALSE`{.r} (the default). It only fails if GIS files are requested with `geometry = TRUE`{.r}.
+
+Please refer to corrections at [NHGIS Data Loading Instructions](nhgis_data_loading_instructions.md). This fix is temporary, and this notice will be removed when Census FTP servers are back online.
+
+The corrected code replaces the first call of `get_decennial()` at the beginning of the tutorial. Once you have the data loaded, the remainder of the code should work as written. Please bring any problems to my attention.
+
 🛠️ **UNDER CONSTRUCTION** 🛠️
 
 This assignment roughly follows the structure of *Analyzing U.S. Census Data* [6.3 Map-making with tmap](https://walker-data.com/census-r/mapping-census-data-with-r.html#map-making-with-tmap). However, **tmap** underwent big changes between versions 3 and 4. *AUSCD* 6.3 is written for **tmap** 3.x. I cover similar material here, while updating the code for the just-released (Jan 2025) **tmap** 4.0.
