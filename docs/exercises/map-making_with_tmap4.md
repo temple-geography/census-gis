@@ -2,7 +2,7 @@
 
 ⚠️ **WARNING** ⚠️
 
-As of February 4, 2025, Census FTP servers are partially shutdown. The `get_decennial()` call demonstrated below will not work. Note that `get_decennial()` is still working with `geometry = FALSE`{.r} (the default). It only fails if GIS files are requested with `geometry = TRUE`{.r}.
+As of February 4, 2025, Census FTP servers are partially shutdown. The `get_decennial()` call demonstrated below will not work. Note that `get_decennial()` is still working with `geometry = FALSE` (the default). It only fails if GIS files are requested with `geometry = TRUE`.
 
 Please refer to corrections at [NHGIS Data Loading Instructions](nhgis_data_loading_instructions.md). This fix is temporary, and this notice will be removed when Census FTP servers are back online.
 
@@ -27,7 +27,7 @@ options(tigris_use_cache=TRUE)
 library(tmap)
 ```
 
-So far, we have mostly *not* worked with Census geometries. Now we are going to use **tidycensus** to download geometries as well as demographic data for Census tracts in Philadelphia. The additional line `options(tigris_use_cache=TRUE)`{.r} will prevent **tidycensus** from redownloading the spatial data files if they have already been downloaded. They are automatically stored in a cache directory private to **tidycensus**. You don't have to worry about where they are stored (although advanced users can configure the location of the cache directory).
+So far, we have mostly *not* worked with Census geometries. Now we are going to use **tidycensus** to download geometries as well as demographic data for Census tracts in Philadelphia. The additional line `options(tigris_use_cache=TRUE)` will prevent **tidycensus** from redownloading the spatial data files if they have already been downloaded. They are automatically stored in a cache directory private to **tidycensus**. You don't have to worry about where they are stored (although advanced users can configure the location of the cache directory).
 
 We start by specifying the Census variables we will download. Usually, I prefer to use `lower_case_with_underscores` for column names. However, these variable names will also appear in the legend of the maps we create. We will therefore use columns names that will serve as display names in the legend. (Note that the display names can be overridden in the legend, but I want to limit the content in this introduction.)
 
@@ -47,7 +47,7 @@ race_vars = c(
 )
 ```
 
-Remember that **tidycensus** can download data in "tidy" (long) format (variables in rows) or "wide" format (variables in columns). So far we have mostly worked with long format. For GIS and mapping, we usually want wide format. We also explicitly request geometries (the default is `geometry = FALSE`{.r}). The following statement requests the data from the Census API. I store it in its original form (other than some column renaming at the end) prefixed with `zz_`. I do this because, as we experiment with altering the data, I want to be able to start over without having to repeat the Census API call, which will be the slowest part of this tutorial. (The use of `zz_` is just my preference, because it keeps those data frames alphabetically at the end, and kind of "out of the way" when I list objects in my R environment. You may prefer a different prefix.)
+Remember that **tidycensus** can download data in "tidy" (long) format (variables in rows) or "wide" format (variables in columns). So far we have mostly worked with long format. For GIS and mapping, we usually want wide format. We also explicitly request geometries (the default is `geometry = FALSE`). The following statement requests the data from the Census API. I store it in its original form (other than some column renaming at the end) prefixed with `zz_`. I do this because, as we experiment with altering the data, I want to be able to start over without having to repeat the Census API call, which will be the slowest part of this tutorial. (The use of `zz_` is just my preference, because it keeps those data frames alphabetically at the end, and kind of "out of the way" when I list objects in my R environment. You may prefer a different prefix.)
 
 ```r
 zz_philly_race = get_decennial(
@@ -199,7 +199,7 @@ Color palettes are divided into three categories:
 * **Diverging** palettes are also used for quantitative data. These are essentially two light-to-dark color schemes in different hues (for example, purple and green) attached to each other, with lighter colors representing "neutral" values, such as "no change" in gain/loss data, or the mean or median in another data set. Darker colors in the two hues represent extremes above or below this neutral value.
 * **Qualitative** palettes are used for categorical data, that is where the data represent a classification rather than an ordering. Examples include religious affiliation, race, or land use (residential/commercial/industrial).
 
-Many geographers use the color palettes created by Penn State cartographer Cynthia (Cindy) Brewer, which can be explored at the [ColorBrewer](https://colorbrewer2.org) website. These color palettes have been incorporated into many GIS and data science softwares, including **tmap**. In **tmap** they can be invoked with the names scheme `"brewer.palette_name"`, where the palette name should be in lowercase. So, for example, ColorBrewer has a palette named "Purples". In the map we created above, we invoked this palette with `values = "brewer.purples"`{.r}.
+Many geographers use the color palettes created by Penn State cartographer Cynthia (Cindy) Brewer, which can be explored at the [ColorBrewer](https://colorbrewer2.org) website. These color palettes have been incorporated into many GIS and data science softwares, including **tmap**. In **tmap** they can be invoked with the names scheme `"brewer.palette_name"`, where the palette name should be in lowercase. So, for example, ColorBrewer has a palette named "Purples". In the map we created above, we invoked this palette with `values = "brewer.purples"`.
 
 **tmap** has many more color palettes built in. You can explore these interactively by running the following code in RStudio.
 
@@ -239,9 +239,9 @@ tm_shape(philly_race) +
 
 ![](images/choropleth_facet_map.png)
 
-We use `fill.free = FALSE`{.r} so that all the maps use the same legend. That is, the legend is not set "freely", it is the same across all facets (maps). If you were mapping unrelated data variables (for example, percentage Black and median household income), you would want the legends to use different scales, and would omit this parameter. We specify the legend title with `tm_legend()`. Without it, the legend title defaults to the first variable requested, in this case, "% White".
+We use `fill.free = FALSE` so that all the maps use the same legend. That is, the legend is not set "freely", it is the same across all facets (maps). If you were mapping unrelated data variables (for example, percentage Black and median household income), you would want the legends to use different scales, and would omit this parameter. We specify the legend title with `tm_legend()`. Without it, the legend title defaults to the first variable requested, in this case, "% White".
 
-Why are we only mapping four races? If you look at the data, you will see that the other races are present at very low levels in Philadelphia. You can test this by running the code above and replacing `fill = fill_vars`{.r} with `str_subset(colnames(philly_race), "%")`{.r}. This will map all columns (variables) that contain the percent sign, which is all of our percentage race variables.
+Why are we only mapping four races? If you look at the data, you will see that the other races are present at very low levels in Philadelphia. You can test this by running the code above and replacing `fill = fill_vars` with `str_subset(colnames(philly_race), "%")`. This will map all columns (variables) that contain the percent sign, which is all of our percentage race variables.
 
 
 There are at least two ways in which this map can be improved. First, for small maps like this, the Census tract borders obscure the fill color, particularly on the "% Asian" facet. Second, we ended up with three maps on one line and one map on a second line, with a lot of dead space in the lower right.

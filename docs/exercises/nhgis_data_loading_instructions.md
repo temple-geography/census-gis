@@ -4,10 +4,10 @@ As of February 4, 2025, Census FTP servers are partially shutdown. The Census AP
 
 I have obtained the GIS files and the demographic data for the exercise [Map-Making with Tmap v4](map-making_with_tmap4.md) from National Historical GIS (<https://www.nhgis.org/>). I'm not going to explain all of this code here, but after you run it, you should have a spatial data frame that exactly mimics the result of the **tidycensus** `get_decennial()` call required for this exercise.
 
-**NOTE:** The NHGIS dataset includes all tracts in the United States. You will filter the result to get only the tracts in the county you are mapping for this exercise. The final line (`rm(tmp)`{.r}) deletes the rest of the United States. Do this before closing your project, so that the `.RData` file is not massive.
+**NOTE:** The NHGIS dataset includes all tracts in the United States. You will filter the result to get only the tracts in the county you are mapping for this exercise. The final line (`rm(tmp)`) deletes the rest of the United States. Do this before closing your project, so that the `.RData` file is not massive.
 
 1. Install **ipumsr**, a package to import data downloaded from NHGIS. **This only needs to be done once, so is not included in the code below**.
-    `install.packages("ipumsr")`{.r}
+    `install.packages("ipumsr")`
 2. Download the files `nhgis0048_csv.zip` and `nhgis0048_shape.zip` from Canvas. **Do not unzip them.** Note that `nhgis0048_shape.zip` is large (464 MB), so if you don't have the space on your personal laptop, you will have to do this exercise on a lab computer.
 3. Run the code below, with the following changes:
     * Change `data_dir` to the folder on your computer where you have downloaded the files.
