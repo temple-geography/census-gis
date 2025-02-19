@@ -28,19 +28,19 @@ neighborhood_pop = neighborhood_tracts %>%
   )
 ```
 
-**tidycensus** also has an `moe_prop()` function that can be used to calculate the margin of error of a proportion (percentage). Assume you have a data frame named `city`, with population and margin of error in `total`, `total_moe`, `same_house`, and `same_house_moe` columns. The inputs to this function should be the actual estimates and MOEs, *not* the percentages. You would calculate MOEs of the proportions as follows:
+**tidycensus** also has an `moe_prop()` function that can be used to calculate the margin of error of a proportion (percentage). Assume you have a data frame named `city`, with population and margin of error in `total`, `total_moe`, `same_house`, and `same_house_moe` columns. The inputs to this function should be the actual estimates and MOEs, *not* the percentages. You would add the percent of households living in the same house and the MOE of the percent as follows:
 
 ```r
-philly_mobility = philly_mobility %>%
+city = city %>%
   mutate(
     pct_same_house = 100 * same_house / total,
     pct_same_house_moe = 100 * moe_prop(same_house, total, same_house_moe, total_moe)
   )
 ```
 
-Note that if you want percentages instead of proportions, you should multiply by 100 *after* applying `moe_prop()`. 
+Note that to get percentages instead of proportions, you should multiply by 100 *after* applying `moe_prop()`. 
 
-Don't adjust the estimates or MOEs that you use as inputs, and don't try to use the percentage itself *in* the calculation. This is different from the formula shown in the textbook, which uses the proportion (percentage) in the MOE formula.
+Don't adjust the estimates or MOEs that you use as inputs, and don't try to use the proportion itself *in* the calculation. This is different from the formula shown in the textbook, which uses the proportion (percentage) in the MOE formula.
 
 ## Deliverables
 
