@@ -1,6 +1,6 @@
 Meeting:
 
-* Thursday 5:30-8pm, Mazur 22
+* Tuesday 5:30-8pm, Mazur 22
 
 Instructor Info:
 
@@ -8,7 +8,7 @@ Instructor Info:
 * 104 Gladfelter Hall – In GIS Studio, enter 103A
 * [Lee.Hachadoorian@temple.edu](mailto:Lee.Hachadoorian@temple.edu)
 * Office Hours:
-    * Monday 2:30-3:30pm  (virtual only)
+    * Monday 1-2pm  (virtual only)
     * Tuesday 2:30-3:30
     * Wednesday 2:30-3:30
 
