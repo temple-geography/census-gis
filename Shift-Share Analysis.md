@@ -88,7 +88,7 @@ subsequent web pages:
 
 # Using the Shift-Share Spreadsheet
 
-1.  Open the file `Shift-Share Template.xls`. Look at the sheet named
+1.  Open the file `Shift-Share Template.ods`. Look at the sheet named
     `Shift-Share Table`. What you see is a list of economic
     supersectors, which are extremely broad collections of industries.
     Supersectors which are indented are subgroups. For example, 41, 42,
