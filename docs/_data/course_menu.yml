@@ -25,7 +25,7 @@
     - name: "Exercise 5: Aggregating Tract-Level Estimates to Neighborhoods"
       link: /exercises/eusc_6-1_aggregating_tract-level_estimates_to_neighborhoods
     - name: "Exercise 6: Business Datasets"
-      link: /exercises/business_datasets
+      link: https://github.com/temple-geography/census-gis/blob/master/Shift-Share%20Analysis.md # /exercises/business_datasets
     - name: "Exercise 7: Special Topics 1"
       link: /exercises/special_topics_1
     - name: "Exercise 8: Special Topics 2"
