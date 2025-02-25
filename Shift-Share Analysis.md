@@ -54,9 +54,9 @@ subsequent web pages:
 6.  Industry (Screen 6 of 7): NAICS codes are hierarchical. NAICS
     sectors are two digit codes, e.g. NAICS 42 is Retail Traide, which
     appears in this list as `42000000`. In order to restrict our
-    selection to sectors and supersectors, enter `??000000` in the Code
-    textbox (at the bottom) and hit the Search button. The list is now
-    restricted to codes with any two characters followed by six zeroes.
+    selection to sectors and supersectors, enter `000000` (six zeroes) 
+    in the Search Industry textbox. The listbox will automatically update 
+    based on the search filter.
     Select *all* of the industries in the listbox and click Next Form.
 
 7.  Year (Screen 7 of 7): In spite of the name, you are not selecting
