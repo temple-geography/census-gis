@@ -194,7 +194,7 @@ We can do the same thing to compare changing segregation over time. Download rac
 
 Once you have the data, you should use resampling to create a distribution of values for *D* in the year 2000, then run a *t*-test to compare with *D* in 2020, then create an overlapping histogram. Refer to the code above where you compared two counties. Comparing the same county at two points in time will work the same way. The result should look like similar to this:
 
-![](histogram_segregation_philly_2020_vs_2000.png)
+![](images/histogram_segregation_philly_2020_vs_2000.png)
 
 ## Visualizing Local Segregation
 
