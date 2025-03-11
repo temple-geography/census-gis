@@ -243,7 +243,7 @@ Note, however, that the middle class in the legend is "1.0 to 1.5". We would lik
 
 Therefore in the following code I will use **fixed** class breaks, and explicitly define them so that the breaks below 1 are balanced against their inverse above one, e.g. 0.5 and 2.0.
 
-I have used an upper value of 2.5, since that was what appeared in the default map above. You should make sure to use a value that is higher than maximum in your data, but not so high as to be misleading. (That is, don't just stick in 100.) You can also use the `max()` function to derive the actual highest value from your location quotient column. For my data, this would look like `max(philly_race_lq$```Black LQ```, na.rm = TRUE)`.
+I have used an upper value of 2.5, since that was what appeared in the default map above. You should make sure to use a value that is higher than maximum in your data, but not so high as to be misleading. (That is, don't just stick in 100.) You can also use the `max()` function to derive the actual highest value from your location quotient column. For my data, this would look like ``max(philly_race_lq$`Black LQ`, na.rm = TRUE)``.
 
 The rest of the code mimics what you have already seen in the tmap exercise.
 
