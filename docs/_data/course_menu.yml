@@ -26,8 +26,8 @@
       link: /exercises/eusc_6-1_aggregating_tract-level_estimates_to_neighborhoods
     - name: "Exercise 6: Business Datasets"
       link: /exercises/business_datasets
-    - name: "Exercise 7: Special Topics 1"
-      link: /exercises/special_topics_1
+    - name: "Exercise 7: Special Topics 1 - Segregation Analysis"
+      link: /exercises/segregation_analysis
     - name: "Exercise 8: Special Topics 2"
       link: /exercises/special_topics_2
     - name: "Exercise 9: Special Topics 3"
