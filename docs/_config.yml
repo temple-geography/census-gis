@@ -6,6 +6,9 @@ description: Prof. Hachadoorian | Spring 2025
 # theme: jekyll-theme-dinky
 remote_theme: chrisrhymes/bulma-clean-theme@v0.14.0
 
+kramdown:
+  math_engine: katex
+
 titles_from_headings:
   enabled: false
 
