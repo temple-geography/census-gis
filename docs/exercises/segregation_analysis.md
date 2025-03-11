@@ -50,11 +50,13 @@ After downloading data for Philadelphia and Allegheny counties, I have two data 
 
 ## Calculating the Index of Dissimilarity
 
-We will calculate the Index of Dissimarity ($D$) for Philadelphia and Allegheny. $D$ is a measure of segregation between two groups, calculated as follows:
+We will calculate the Index of Dissimarity (*D*) for Philadelphia and Allegheny. *D* is a measure of segregation between two groups, calculated as follows:
 
-$$D = \frac{1}{2} \sum_i \left|\frac{a_i}{A} - \frac{b_i}{B} \right|$$
+<!--$$D = \frac{1}{2} \sum_i \left|\frac{a_i}{A} - \frac{b_i}{B} \right|$$-->
 
-**OasisR** makes it incredibly easy to calculate $D$ using the `DIDuncan()` function. `DIDuncan()` accepts a data frame *with only two columns*. Those two columns contain the populations for the two groups that you want to calculate the segregation between. We select the two columns of interest (I will use `white` and `black`), and pass that data frame to `DIDuncan()`.
+![](images/dissimilarity_formula.png)
+
+**OasisR** makes it incredibly easy to calculate *D* using the `DIDuncan()` function. `DIDuncan()` accepts a data frame *with only two columns*. Those two columns contain the populations for the two groups that you want to calculate the segregation between. We select the two columns of interest (I will use `white` and `black`), and pass that data frame to `DIDuncan()`.
 
 ```R
 # View Index of Dissimilarity for Philly
@@ -84,13 +86,13 @@ allegheny_race_2020 |>
 
 > **NOTE:** My data frames do not have geometries. If you requested geometries with your download, this code will fail, because `select()` called on a spatial data frame will retain the geometries, and then the data frame that you pipe to `DIDuncan()` will have three columsn: the two race groups and the geometry column. In this case, use `st_drop_geometry() |>` to drop the geometries before piping to `DIDuncan()`.
 
-The result is a matrix showing the segregation between Group 1 and itself. Group 1 and Group 2, Group 2 and Group 1, and between Group 2 and itself. For $D$, segregation between a group and itself is always zero, and segregation between two groups is **symmetric**, which is why the value in the upper right cell matches the value in the lower left cell. *For other indices of segregation, either of these things might not be true.* Some indices allow a group to be segregated from itself, or allow segregation between groups to be non-symmetric.
+The result is a matrix showing the segregation between Group 1 and itself. Group 1 and Group 2, Group 2 and Group 1, and between Group 2 and itself. For *D*, segregation between a group and itself is always zero, and segregation between two groups is **symmetric**, which is why the value in the upper right cell matches the value in the lower left cell. *For other indices of segregation, either of these things might not be true.* Some indices allow a group to be segregated from itself, or allow segregation between groups to be non-symmetric.
 
-> **NOTE:** As discussed in class, $D$ can *only* calculate segregation between two groups. Calculating multigroup segregation requires other indices, such as MultiGroup Dissimilarity ($D*$), which is implemented in OasisR as `DMulti()`.
+> **NOTE:** As discussed in class, *D* can *only* calculate segregation between two groups. Calculating multigroup segregation requires other indices, such as MultiGroup Dissimilarity (_D*_), which is implemented in OasisR as `DMulti()`.
 
 ## Statistical Inference on the Index of Dissimilarity
 
-As we can see, Black-White segregation ($D_{BW}$) for Philly is 0.7047, and for Allegheny it is 0.6139. Obviously, these numbers are different, but is the difference statistically significant? `OasisR` allows us to use **bootstrapping** to create hypothetical alternative distributions of the population. We can then use standard statistical tests, such as the `t`-test of difference of means, to compare these distributions.
+As we can see, Black-White segregation <!--($D_{BW}$)--> for Philly is 0.7047, and for Allegheny it is 0.6139. Obviously, these numbers are different, but is the difference statistically significant? `OasisR` allows us to use **bootstrapping** to create hypothetical alternative distributions of the population. We can then use standard statistical tests, such as the `t`-test of difference of means, to compare these distributions.
 
 We will use the `ResampleTest()` function to create the distributions for each county using the bootstrap method (`simtype = "Boot"`) with the number of simulations (`nsim`) set to 1,000. Remember that **OasisR** can calculate many different segregation measures. We tell `ResampleTest()` which measure we want to simulate by passing the function name as a string, which in this case is `"DIDuncan"`. Other segregation functions can be used as well.
 
@@ -107,7 +109,7 @@ resample_allegheny = allegheny_race_2020 |>
   ResampleTest("DIDuncan", simtype = "Boot", nsim = nsim)
 ```
 
-The resampling procedure produces a set of "possible" values for $D$. These can be stored in the `IndexDist` slot of the resulting object. We view the first few values here:
+The resampling procedure produces a set of "possible" values for *D*. These can be stored in the `IndexDist` slot of the resulting object. We view the first few values here:
 
 ```R
 head(resample_philly_2020$IndexDist[1,])
@@ -125,7 +127,7 @@ head(resample_allegheny_2020$IndexDist[1,])
 [1] 0.6020 0.5857 0.5974 0.6492 0.6361 0.6208
 ```
 
-A *t*-test is a common statistical method to compare distributions to see if their means differ, usually within a 95% confidence level. That is, we are asking if the *mean* $D$ of the resampled distribution for Philadelphia is 95% likely to be different from the *mean* $D$ of the resampled distribution for Allegheny.
+A *t*-test is a common statistical method to compare distributions to see if their means differ, usually within a 95% confidence level. That is, we are asking if the *mean* *D* of the resampled distribution for Philadelphia is 95% likely to be different from the *mean* *D* of the resampled distribution for Allegheny.
 
 ```R
 d_philly_2020 = resample_philly_2020$IndexDist[1,]
@@ -150,9 +152,9 @@ mean of x mean of y
 The important parts of this are:
 
 * The difference in means is 95% likely to be between 0.091 and 0.094 (rounded).
-* The *p*-value is is $2.2 \times 10^{-16}$. This indicates a very, very small probability that there is no true difference between the means of the distributions. Another way of saying this is that it is highly, highly *unlikely* that segregation in Philadelphia and Allegheny is actually *the same*.
+* The *p*-value is is 2.2 x 10^-16. This indicates a very, very small probability that there is no true difference between the means of the distributions. Another way of saying this is that it is highly, highly *unlikely* that segregation in Philadelphia and Allegheny is actually *the same*.
 
-We can compare the distributions visually using histograms. First, we construct a data frame to hold *both* distributions. Since the distributions have *only* the simulated $D$ values, we also have to assign names to each value. This is so that we can keep Philadelphia and Allegheny separate in the histograms.
+We can compare the distributions visually using histograms. First, we construct a data frame to hold *both* distributions. Since the distributions have *only* the simulated *D* values, we also have to assign names to each value. This is so that we can keep Philadelphia and Allegheny separate in the histograms.
 
 ```R
 d_compare = tibble(
@@ -190,13 +192,13 @@ We can do the same thing to compare changing segregation over time. Download rac
     * Etc. Notice that the final three digits are the same in each case (i.e. `001` for total population in both 2020 and 2000).
 * The 2000 data does not use the convention of assigning Census tracts IDs in the 9000s for special land use areas. Filter your data to remove tracts with low or no population (e.g. remove 0 population tracts, or tracts with population below 10).
 
-Once you have the data, you should use resampling to create a distribution of values for $D$ in the year 2000, then run a *t*-test to compare with $D$ in 2020, then create an overlapping histogram. Refer to the code above where you compared two counties. Comparing the same county at two points in time will work the same way. The result should look like similar to this:
+Once you have the data, you should use resampling to create a distribution of values for *D* in the year 2000, then run a *t*-test to compare with *D* in 2020, then create an overlapping histogram. Refer to the code above where you compared two counties. Comparing the same county at two points in time will work the same way. The result should look like similar to this:
 
 ![](histogram_segregation_philly_2020_vs_2000.png)
 
 ## Visualizing Local Segregation
 
-$D$ and many other such indices are measures of *global* segregation. That is, they quantify how segregated groups are from each other across a region, such as a county or metropolitan area.
+*D* and many other such indices are measures of *global* segregation. That is, they quantify how segregated groups are from each other across a region, such as a county or metropolitan area.
 
 Often we are interested in quantifying and visualization *local* segregation. That is, for a small area *within* the region, such as a Census tract, we want to see how segregated that population is *in that area*. One way to do this is with a measure that shows how atypical the population is within the context of the larger region.
 
@@ -204,14 +206,16 @@ One way to do that is with the **location quotient**. We have already seen this 
 
 The location quotient is calculated as a ratio of ratios:
 
-$$LQ = \frac{group/total}{GROUP/TOTAL}$$
+<!--$$LQ = \frac{group/total}{GROUP/TOTAL}$$-->
+
+![](images/location_quotient_formula.png)
 
 where:
 
-* $group$ is the group population in the small area
-* $total$ is the total population in the small area
-* $GROUP$ is the group population in the region
-* $TOTAL$ is the total population in the region
+* *group* is the group population in the small area
+* *total* is the total population in the small area
+* *GROUP* is the group population in the region
+* *TOTAL* is the total population in the region
 
 We want to map the results, so begin by redownloading race data *with geometries* for 2020 the largest county in your state. You can also reuse the data frame that you created for Exercise 3b: Map-Making with Tmap v4.
 
