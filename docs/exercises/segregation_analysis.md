@@ -52,9 +52,9 @@ After downloading data for Philadelphia and Allegheny counties, I have two data 
 
 ## Calculating the Index of Dissimilarity
 
-We will calculate the Index of Dissimarity (*D*) for Philadelphia and Allegheny. *D* is a measure of segregation between two groups, *A* and *B*, calculated as follows:
+We will calculate the Index of Dissimarity ($D$) for Philadelphia and Allegheny. *D* is a measure of segregation between two groups, *A* and *B*, calculated as follows:
 
-<!--$$D = \frac{1}{2} \sum_i \left|\frac{a_i}{A} - \frac{b_i}{B} \right|$$-->
+$$D = \frac{1}{2} \sum_i \left|\frac{a_i}{A} - \frac{b_i}{B} \right|$$
 
 ![](images/dissimilarity_formula.png)
 
