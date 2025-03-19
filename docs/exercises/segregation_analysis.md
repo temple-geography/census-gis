@@ -92,7 +92,7 @@ allegheny_race_2020 |>
 
 The result is a matrix showing the segregation between Group 1 and itself; Group 1 and Group 2; Group 2 and Group 1; and between Group 2 and itself. For $D$, segregation between a group and itself is always zero, and segregation between two groups is **symmetric**, which is why the value in the upper right cell matches the value in the lower left cell. *For other indices of segregation, either of these things might not be true.* Some indices allow a group to be segregated from itself, or allow segregation between groups to be non-symmetric.
 
-> **NOTE:** As discussed in class, $D$ can *only* calculate segregation between two groups. Calculating multigroup segregation requires other indices, such as MultiGroup Dissimilarity ($D*$), which is implemented in OasisR as `DMulti()`.
+> **NOTE:** As discussed in class, $D$ can *only* calculate segregation between two groups. Calculating multigroup segregation requires other indices, such as MultiGroup Dissimilarity ($D^*$), which is implemented in OasisR as `DMulti()`.
 
 ## Statistical Inference on the Index of Dissimilarity
 
