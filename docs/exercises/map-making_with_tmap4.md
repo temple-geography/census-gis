@@ -1,16 +1,6 @@
 # Exercise: Map-Making with Tmap v4
 
-⚠️ **WARNING** ⚠️
-
-As of February 4, 2025, Census FTP servers are partially shutdown. The `get_decennial()` call demonstrated below will not work. Note that `get_decennial()` is still working with `geometry = FALSE` (the default). It only fails if GIS files are requested with `geometry = TRUE`.
-
-Please refer to corrections at [NHGIS Data Loading Instructions](nhgis_data_loading_instructions.md). This fix is temporary, and this notice will be removed when Census FTP servers are back online.
-
-The corrected code replaces the first call of `get_decennial()` at the beginning of the tutorial. Once you have the data loaded, the remainder of the code should work as written. Please bring any problems to my attention.
-
-🛠️ **UNDER CONSTRUCTION** 🛠️
-
-This assignment roughly follows the structure of *Analyzing U.S. Census Data* [6.3 Map-making with tmap](https://walker-data.com/census-r/mapping-census-data-with-r.html#map-making-with-tmap). However, **tmap** underwent big changes between versions 3 and 4. *AUSCD* 6.3 is written for **tmap** 3.x. I cover similar material here, while updating the code for the just-released (Jan 2025) **tmap** 4.0.
+This assignment roughly follows the structure of *Analyzing U.S. Census Data* [6.3 Map-making with tmap](https://walker-data.com/census-r/mapping-census-data-with-r.html#map-making-with-tmap). However, **tmap** underwent big changes between versions 3 and 4. *AUSCD* 6.3 is written for **tmap** 3.x. I cover similar material here, while updating the code for **tmap** 4.0 (released Jan 2025).
 
 # TUTORIAL
 
@@ -47,7 +37,9 @@ race_vars = c(
 )
 ```
 
-Remember that **tidycensus** can download data in "tidy" (long) format (variables in rows) or "wide" format (variables in columns). So far we have mostly worked with long format. For GIS and mapping, we usually want wide format. We also explicitly request geometries (the default is `geometry = FALSE`). The following statement requests the data from the Census API. I store it in its original form (other than some column renaming at the end) prefixed with `zz_`. I do this because, as we experiment with altering the data, I want to be able to start over without having to repeat the Census API call, which will be the slowest part of this tutorial. (The use of `zz_` is just my preference, because it keeps those data frames alphabetically at the end, and kind of "out of the way" when I list objects in my R environment. You may prefer a different prefix.)
+Remember that **tidycensus** can download data in "tidy" (long) format (variables in rows) or "wide" format (variables in columns). So far we have mostly worked with long format. For GIS and mapping, we usually want wide format. We will also explicitly request geometries (requiring `geometry = TRUE`, as the default is to *not* download geometries).
+
+The following statement requests the data from the Census API. Other than some column renaming, I store it as originally downloaded prefixed with `zz_`. I do this because, as we experiment with altering the data, I want to be able to start over without having to repeat the Census API call, which will be the slowest part of this tutorial. (The use of `zz_` is just my preference, because it keeps those data frames alphabetically at the end, and kind of "out of the way" when I list objects in my R environment. You may prefer a different prefix.)
 
 ```r
 zz_philly_race = get_decennial(
@@ -62,7 +54,7 @@ zz_philly_race = get_decennial(
 ) %>% rename(geoid = GEOID, name = NAME)
 ```
 
-The `qtm()` function ("quick thematic map") let's us look at the geometries.
+The `qtm()` function ("quick thematic map") lets us look at the geometries.
 
 ```r
 qtm(zz_philly_race)
@@ -74,9 +66,9 @@ qtm(zz_philly_race)
 
 So far, not very interesting. Let's start with a basic choropleth map. A choropleth is a map of polygons that are colored by an underlying data value. It is arguably the most common way to visually explore Census data, and a good place to start.
 
-**One important thing to keep in mind about choropleths is that they should (almost) never be used to map raw count data.** As the area of a polygon gets larger, the counts usually go up as well. It may be true that in the United States there are some small area states (like New Jersey) that are very urban, and some large area states (like Wyoming) that are very rural, but on average large area states will have larger populations than small area states. If you make a chorpleth map of a raw count, you will tend to just make a map that shows more people living in larger areas.
+**One important thing to keep in mind about choropleths is that they should (almost) never be used to map raw count data.** As the area of a polygon gets larger, the counts usually go up as well. It may be true that in the United States there are some small area states (like New Jersey) that are very urban, and some large area states (like Wyoming) that are very rural, but on average large area states will have larger populations than small area states. If you make a choropleth map of a raw count, you will tend to just make a map that shows more people living in larger areas. This is unsurprising, and useless for discerning spatial patterns.
 
-We will address this by converting the raw counts to percentages. We create our main data frame, `philly_race`, while leaving the original data untouched. We use backticks (`` `...` ``) to create column names that have spaces and special characters (like `%`).
+We will address this by converting the raw counts to percentages. We create our main data frame, `philly_race`, while leaving the original data untouched. We use backticks (`` `...` ``) to create column names that have spaces or special characters (like `%`).
 
 ```r
 philly_race = philly_race %>%
@@ -92,7 +84,7 @@ philly_race = philly_race %>%
   )
 ```
 
-Now we can use `qtm()` to make a quick map by adding the name of one of our data columns. We will use percentage Black. Note that **tmap** requires the data variable names (the columns of the data frame) to be passed using quotation marks (`"..."`).
+Now we can use `qtm()` to make a quick map using the name of one of the new columns. We will use percentage Black. Note that **tmap** requires the data variable names (the columns of the data frame) to be passed using quotation marks (`"..."`).
 
 ```r
 qtm(philly_race, "% Black")
@@ -100,13 +92,13 @@ qtm(philly_race, "% Black")
 
 ![](images/choropleth_no_exclusions.png)
 
-This created a choropleth map with some useful defaults. Since percentage Black is a numeric variable, **tmap** is automatically picking a sequential color scheme (light to dark blue), one that is used for visually displaying increasing values. Later on we will also practice using a categorical color scheme. It also broke the numeric data into 5 classes using "pretty" breaks, that is, the classes are broken on round numbers. These are default behaviors, and many other choices are possible.
+This created a choropleth map with some useful defaults. Since percentage Black is a numeric variable, **tmap** automatically uses a **sequential** color scheme (light to dark blue), which is a color scheme that is used for visually displaying increasing values. Later on we will also practice using a **categorical** color scheme. **Tmap** also broke the numeric data into 5 classes using "pretty" breaks, that is, the classes are broken on round numbers. These are default behaviors, and many other choices are possible.
 
 Some areas are assigned the value "Missing", but if you are familiar with Philadelphia geography, you may notice that there is population showing up in large park or industrial areas. **Census tracts numbered in the 9000s are special land use areas, that may include parks, water, and institutional facilites.** It is often a good idea to exclude these tracts from demographic analysis and visualization.
 
 There are several ways we could accomplish this. One way is to convert the percentages for tracts numbered 9xxx to `NA`, the special R value for missing data. The quick way to do that is to make the total population for tracts numbered 9xxx `NA`, and then recalculate the percentages. Since the GEOIDs for all tracts in Philadelphia begin with `42101` (`42` for Pennsylvania, `101` for Philadelphia County), we just need to check to see if the sixth character in the GEOID is a `9`.
 
-Here, we recreate `philly_race` from our original download, using the `if_else()` function to replace the total population with `NA` *if* the sixth character in `geoid` matches `"9"`. Then we recalculate the percentages. Finally, we recreate the map.
+Here, we recreate the `philly_race` data frame from our original download, using the `if_else()` function to replace the total population with `NA` *if* the sixth character in `geoid` matches `"9"`. Then we recalculate the percentages. Finally, we recreate the map.
 
 ```r
 philly_race = zz_philly_race %>%
@@ -132,7 +124,7 @@ qtm(philly_race, "% Black")
 
 Notice that several more tracts are assigned the value of "Missing".
 
-`qtm()` gives us limited control over the map, so we will use other **tmap** functions to create a more customized map. We demonstrate the basic syntax by duplicating the output of `qtm()`.
+`qtm()` gives us limited control over the map, so we will use other **tmap** functions to create a more customized map. We demonstrate the basic syntax by duplicating the map we just created.
 
 ```r
 tm_shape(philly_race) +
@@ -141,7 +133,7 @@ tm_shape(philly_race) +
 
 ![](images/choropleth_basic.png)
 
-The `tm_shape()` function sets up the basics by providing the spatial layer (`philly_race`) that we will be working with. The next line tells us to map this layer using polygons, and to base the fill color (that is the color on the inside of the polygon, as opposed to the border) based on the `% Black` data variable. Otherwise, this uses the same defaults (blue color ramp, 5 classes, etc.) as `qtm()`.
+The `tm_shape()` function sets up the basics by providing the spatial layer (`philly_race`) that we will be working with. The next line tells us to map this layer using polygons, and to base the fill color (that is the color on the inside of the polygon, as opposed to the border) based on the `% Black` data variable. Otherwise, this uses the same defaults as `qtm()` (blue color ramp, 5 classes, etc.).
 
 **tmap** gives us a lot of control over the style of this map. I will start here with the code and the result, and then explain how the code generates that results.
 
@@ -159,11 +151,17 @@ tm_shape(philly_race) +
 
 ![](images/choropleth_customized.png)
 
-The function call begins the same way with `tm_shape()`. We have added new options to `tm_polygons()`. `fill.scale` let's us control how the data is repesented. We keep the number of classes at 5 (`n = 5`). We change the classification from "pretty" (the default) to "jenks", a popular classification scheme that divides the data into groups of values that are close to each other. We choose a different color scheme using `values = "brewer.purples"`. There are a large number of color schemes built into **tmap**, and I will discuss these below. Finally, when we change the color scheme to "brewer.purples", the default "Missing" color becomes black. This doesn't work well with the color ramp, since it just looks like "very dark purple", so we use `value.na = "tan"` to set the color for tracts with missing data (`NA`).
+The function call begins the same way with `tm_shape()`. We have added new options to `tm_polygons()`.
 
-The line `fill.chart = tm_chart_histogram()` adds a little bit of eye candy. It is a histogram showing the number of tracts that fall into each class of the color scheme, and matches the color of the choropleth. **tmap** has many other chart options, which I am not going to explore in this tutorial.
+* `fill.scale` let's us control how the data is repesented.
+* We keep the number of classes at 5 (`n = 5`).
+* We change the classification from "pretty" (the default) to "jenks", a popular classification scheme that divides the data into groups of values that are close to each other.
+* We choose a different color scheme using `values = "brewer.purples"`. There are a large number of color schemes built into **tmap**, and I will discuss these below.
+* `value.na = "tan"` sets the color for tracts with missing data (`NA`). We do this because when we change the color scheme to "brewer.purples", the default "Missing" color becomes black. This doesn't work well with the color ramp, since black just looks like "very dark purple".
 
-The `tm_layout()` function removes the frame, the black border around the map body that you saw in the previous plots, and sets the background color (`bg.color`) to a light grey. Note that I have used the color names "tan" and "grey70" in this code. R recognizes a large number of English color names. You can specify colors in other ways as well. For example, "tan" corresponds to hexadecimal color code "#D2B48C". I find using actual color names easier.
+The line `fill.chart = tm_chart_histogram()` adds a little bit of eye candy. It is a histogram showing the number of tracts that fall into each class of the color scheme, and the bars match the color of the choropleth. **tmap** has many other chart options, which I am not going to explore in this tutorial.
+
+The `tm_layout()` function removes the frame, the black rectangle around the map body that you saw in the previous plots, and sets the background color (`bg.color`) to a light grey. Note that I have used the color names "tan" and "grey70" in this code. R recognizes a large number of English color names. You can specify colors in other ways as well. For example, "tan" corresponds to hexadecimal color code "#D2B48C". I find using actual color names easier.
 
 The last line (`tm_title()`) adds a title to the map.
 
@@ -199,7 +197,7 @@ Color palettes are divided into three categories:
 * **Diverging** palettes are also used for quantitative data. These are essentially two light-to-dark color schemes in different hues (for example, purple and green) attached to each other, with lighter colors representing "neutral" values, such as "no change" in gain/loss data, or the mean or median in another data set. Darker colors in the two hues represent extremes above or below this neutral value.
 * **Qualitative** palettes are used for categorical data, that is where the data represent a classification rather than an ordering. Examples include religious affiliation, race, or land use (residential/commercial/industrial).
 
-Many geographers use the color palettes created by Penn State cartographer Cynthia (Cindy) Brewer, which can be explored at the [ColorBrewer](https://colorbrewer2.org) website. These color palettes have been incorporated into many GIS and data science softwares, including **tmap**. In **tmap** they can be invoked with the names scheme `"brewer.palette_name"`, where the palette name should be in lowercase. So, for example, ColorBrewer has a palette named "Purples". In the map we created above, we invoked this palette with `values = "brewer.purples"`.
+Many geographers use the color palettes created by Penn State cartographer Cynthia (Cindy) Brewer, which can be explored at the [ColorBrewer](https://colorbrewer2.org) website. These color palettes have been incorporated into many GIS and data science softwares, including **tmap**. In **tmap** they can be invoked with the naming scheme `"brewer.palette_name"`, where the palette name should be in lowercase. So, for example, ColorBrewer has a palette named "Purples". In the map we created above, we invoked this palette with `values = "brewer.purples"`.
 
 **tmap** has many more color palettes built in. You can explore these interactively by running the following code in RStudio.
 
@@ -222,7 +220,7 @@ I will demonstrate both ColorBrewer and **cols4all** in class.
 
 So far, we have only mapped the percentage of the population that is Black. We have obtained data for Hispanic origin, six non-Hispanic racial categories (including "Some Other Race"), and respondents reporting two or more races. It would be great to see all of these at once. We will explore two different ways to do this: faceting in this section, and dot-density maps in the next section.
 
-*Faceting* in data visualization refers to taking *any* data plot and repeating it with variations. That could include mapping different variables for the same geographic area or different geographic areas (e.g. states) for the same variables. It can also involve plots that are not maps, like showing histograms of income distributions faceted by race.
+*Faceting* in data visualization refers to taking *any* data plot and repeating it with variations. That could include mapping different variables for the same geographic area, or mapping different geographic areas (e.g. states) for the same variables. It can also involve plots that are not maps, like showing histograms of income distributions faceted by race.
 
 For this example, we will recreate our basic choropleth map, but we will do it for Hispanics, Blacks, Asians, and Whites.
 
@@ -241,12 +239,11 @@ tm_shape(philly_race) +
 
 We use `fill.free = FALSE` so that all the maps use the same legend. That is, the legend is not set "freely", it is the same across all facets (maps). If you were mapping unrelated data variables (for example, percentage Black and median household income), you would want the legends to use different scales, and would omit this parameter. We specify the legend title with `tm_legend()`. Without it, the legend title defaults to the first variable requested, in this case, "% White".
 
-Why are we only mapping four races? If you look at the data, you will see that the other races are present at very low levels in Philadelphia. You can test this by running the code above and replacing `fill = fill_vars` with `str_subset(colnames(philly_race), "%")`. This will map all columns (variables) that contain the percent sign, which is all of our percentage race variables.
-
+Why are we only mapping four races? If you look at the data, you will see that the other races are present at very low levels in Philadelphia. You can test this by running the code above and replacing `fill = fill_vars` with `str_subset(colnames(philly_race), "%")`. This will map all columns (variables) that contain the percent sign, which is all of our percentage race variables. For some of the race groupings, all of the tracts are the same color, which is the lowest percentage category.
 
 There are at least two ways in which this map can be improved. First, for small maps like this, the Census tract borders obscure the fill color, particularly on the "% Asian" facet. Second, we ended up with three maps on one line and one map on a second line, with a lot of dead space in the lower right.
 
-We can remove the borders by using `tm_fill()` instead of `tm_polygons()` in the code. Conversely, you can map *just* the border by using `tm_borders()`. That is, a polygon has both a fill color and a border color, which can be set independently, but you can also map only the fill or only the border.
+We can remove the borders by using `tm_fill()` instead of `tm_polygons()` in the code. Conversely, you could map *just* the border by using `tm_borders()`. That is, a polygon has both a fill color and a border color, which can be set independently, but you can also map only the fill or only the border.
 
 The weird layout can be fixed by explicitly setting the number of rows and columns using `tm_facets()`. The new code looks like this.
 
